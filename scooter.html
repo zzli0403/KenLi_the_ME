@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Self-Balancing Remote-Controlled Scooter — ME 480 | Zhengzhao (Ken) Li</title>
+
+<style>
+  *{box-sizing:border-box}
+  :root{
+    --ink:#1b1b1f;
+    --muted:#666;
+    --brand:#4b0082;
+    --brand-2:#6a0dad;
+    --glass:rgba(255,255,255,.65);
+    --shadow:0 10px 30px rgba(0,0,0,.15);
+    --radius:18px;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; color:var(--ink); line-height:1.65;
+    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 30%, #f7f7fb 60%, #f9f9fb 100%) fixed;
+    opacity:0; transition:opacity .4s ease;
+  }
+  body.page-in{opacity:1}
+  a{color:var(--brand); text-decoration:none}
+
+  /* Hero */
+  .hero{
+    padding:clamp(70px,12vw,140px) 20px 64px;
+    text-align:center; color:#fff;
+    background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  }
+  .hero h1{margin:0 0 .4rem; font-size:clamp(30px,4vw,44px)}
+  .hero p{margin:.2rem 0; opacity:.95}
+  .chip{
+    display:inline-flex; gap:10px; align-items:center;
+    padding:8px 14px; margin-top:14px;
+    border-radius:999px;
+    background:rgba(255,255,255,.18);
+    backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,.25);
+    font-weight:600;
+  }
+
+  /* Layout */
+  .wrap{max-width:980px; margin:auto; padding:36px 18px}
+  section.card{
+    background:var(--glass);
+    border:1px solid rgba(0,0,0,.06);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px clamp(18px,3vw,30px);
+    margin:30px 0;
+    backdrop-filter:blur(14px);
+    opacity:0; transform:translateY(28px);
+    transition:opacity .8s ease, transform .8s ease;
+  }
+  section.card.show{opacity:1; transform:translateY(0)}
+  h2{color:var(--brand); margin:.1rem 0 1rem}
+  h3{margin:1.2rem 0 .4rem}
+  ul{margin:.4rem 0 .9rem 1.25rem}
+
+  /* Gallery */
+  .gallery{
+    display:flex; flex-wrap:wrap;
+    gap:14px; justify-content:center;
+    margin-top:14px;
+  }
+  .gallery img{
+    flex:1 1 260px;
+    max-width:280px;
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    background:#fff;
+    object-fit:contain;
+  }
+
+  video{
+    width:100%;
+    max-width:720px;
+    border-radius:14px;
+    box-shadow:var(--shadow);
+    display:block;
+    margin:18px auto 0;
+  }
+
+  footer{
+    color:#fff;
+    background:linear-gradient(135deg,var(--brand),var(--brand-2));
+    text-align:center;
+    padding:22px;
+    margin-top:60px;
+  }
+</style>
+</head>
+
+<body>
+<header class="hero">
+  <h1>Self-Balancing Remote-Controlled Scooter</h1>
+  <p>Autonomous Balance & Remote Operation Prototype</p>
+  <div class="chip">
+    <span>ME 480</span> • <span>Completed Project</span>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- Overview -->
+<section class="card">
+  <h2>Project Overview</h2>
+  <p>
+    This project explored the feasibility of enabling a two-wheel electric scooter to maintain
+    balance and maneuver remotely without a rider onboard. Developed as part of
+    <strong>ME 480: Introduction to Computer-Aided Technology</strong>, the prototype represents
+    an early step toward autonomous scooter fleet repositioning and remote recovery.
+  </p>
+  <p>
+    The system integrates mechanical design, actuation, sensing, and embedded control to achieve
+    dynamic stabilization and remote-controlled motion on a modified consumer scooter platform.
+  </p>
+</section>
+
+<!-- Motivation -->
+<section class="card">
+  <h2>Motivation & Context</h2>
+  <p>
+    Shared electric scooters are widely used in urban environments, yet fleet logistics still rely
+    heavily on manual labor to retrieve, charge, and reposition vehicles. This project investigates
+    a technical foundation for reducing that dependency by enabling scooters to balance and move
+    autonomously under remote supervision.
+  </p>
+  <ul>
+    <li>Reduce manual scooter retrieval and repositioning effort</li>
+    <li>Demonstrate feasibility of riderless balance control</li>
+    <li>Integrate mechanical and control systems in a real-world platform</li>
+  </ul>
+</section>
+
+<!-- Architecture -->
+<section class="card">
+  <h2>System Architecture</h2>
+  <p>
+    The scooter uses an inertial measurement unit (IMU) to sense orientation and angular velocity,
+    feeding balance data to an embedded controller. Actuation is achieved through servo-driven
+    subsystems that manipulate steering, throttle, braking, and stabilization elements.
+  </p>
+  <ul>
+    <li>IMU-based state estimation for balance control</li>
+    <li>Embedded microcontroller handling control logic and communication</li>
+    <li>Servo-actuated steering, throttle, and braking mechanisms</li>
+    <li>Wireless remote interface for operator commands</li>
+  </ul>
+</section>
+
+<!-- Contributions -->
+<section class="card">
+  <h2>My Contributions</h2>
+  <ul>
+    <li>Designed and modeled mechanical mounting structures for actuators and electronics</li>
+    <li>Developed 3D-printed components with attention to stiffness, alignment, and serviceability</li>
+    <li>Participated in system integration between mechanical hardware and control subsystems</li>
+    <li>Assisted in assembly, testing, and iterative refinement of the prototype</li>
+  </ul>
+</section>
+
+<!-- Challenges -->
+<section class="card">
+  <h2>Engineering Challenges</h2>
+  <p>
+    Balancing a two-wheel scooter without a rider introduces significant control and mechanical
+    challenges. The absence of rider mass reduces inherent damping and increases sensitivity to
+    disturbances, placing greater demands on actuation response and structural rigidity.
+  </p>
+  <ul>
+    <li>Maintaining stability without passive rider-induced damping</li>
+    <li>Managing actuator latency and mechanical backlash</li>
+    <li>Packaging actuators and electronics within a constrained frame</li>
+  </ul>
+</section>
+
+<!-- Results -->
+<section class="card">
+  <h2>Results & Current Status</h2>
+  <p>
+    The completed prototype successfully demonstrated self-balancing behavior and remote actuation
+    of steering and propulsion functions. While not fully autonomous, the system validates key
+    concepts required for future development toward autonomous fleet operations.
+  </p>
+  <ul>
+    <li>Achieved stable balance under remote control</li>
+    <li>Demonstrated coordinated steering and throttle actuation</li>
+    <li>Identified clear pathways for future control and hardware refinement</li>
+  </ul>
+</section>
+
+<!-- Lessons -->
+<section class="card">
+  <h2>Key Lessons Learned</h2>
+  <ul>
+    <li>Mechanical stiffness and alignment are critical to effective control performance</li>
+    <li>System-level integration often dominates project complexity over individual subsystems</li>
+    <li>Early consideration of serviceability and packaging simplifies iteration and debugging</li>
+  </ul>
+</section>
+
+<!-- Media -->
+<section class="card">
+  <h2>Project Media</h2>
+
+  <div class="gallery">
+    <img src="images/scooter/hero.jpg" alt="Self-balancing scooter prototype">
+    <img src="images/scooter/cad.jpg" alt="Scooter CAD model">
+    <img src="images/scooter/assembly.jpg" alt="Mechanical assembly">
+    <img src="images/scooter/electronics.jpg" alt="Electronics and wiring layout">
+    <img src="images/scooter/demo.jpg" alt="Prototype testing">
+  </div>
+
+  <!-- Replace src with your actual video file or embed -->
+  <video controls>
+    <source src="images/scooter/demo.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</section>
+
+</main>
+
+<footer>
+  © 2025 Zhengzhao (Ken) Li — ME 480 Project
+</footer>
+
+<script>
+  window.addEventListener('load',()=>document.body.classList.add('page-in'));
+  const io=new IntersectionObserver((e)=>e.forEach(x=>{
+    if(x.isIntersecting){x.target.classList.add('show');io.unobserve(x.target)}
+  }),{threshold:.15});
+  document.querySelectorAll('section.card').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>
