@@ -90,6 +90,20 @@
     padding:22px;
     margin-top:60px;
   }
+
+  .media-30 {
+    width: 30%;
+    max-width: 300px;
+    margin: 18px auto;
+    display: block;
+  }
+  
+  .media-50 {
+    width: 50%;
+    max-width: 420px;
+    margin: 18px auto;
+    display: block;
+  }
 </style>
 </head>
 
@@ -164,8 +178,8 @@
     The following demonstration shows the fully integrated system maintaining upright balance while
     responding to remote steering, throttle, braking, and kickstand commands.
   </p>
-  <video controls>
-    <source src="images/demo.mp4" type="video/mp4">
+  <video controls class="media-50">
+    <source src="images/scooter/demo.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 </section>
@@ -183,7 +197,11 @@
     <li>2.4 GHz RC receiver for wireless command input</li>
     <li>Dedicated power regulation to ensure stable servo operation</li>
   </ul>
-  <img src="images/circuit.png" alt="Scooter control and electronics diagram">
+  <img
+  src="images/circuit.png"
+  alt="Scooter control and electronics diagram"
+  class="media-30"
+>
 </section>
 
 <section class="card">
