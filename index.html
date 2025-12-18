@@ -6,137 +6,183 @@
 <title>Zhengzhao (Ken) Li – Mechanical Engineering Portfolio</title>
 
 <style>
-  *{box-sizing:border-box}
+  /* ---------- Base / Reset ---------- */
+  * { box-sizing: border-box }
   :root{
     --ink:#1b1b1f;
     --muted:#666;
     --brand:#4b0082;
     --brand-2:#6a0dad;
-    --glass:rgba(255,255,255,.75);
-    --shadow:0 12px 32px rgba(0,0,0,.15);
-    --radius:20px;
+    --glass: rgba(255,255,255,.65);
+    --shadow: 0 10px 30px rgba(0,0,0,.15);
+    --radius: 18px;
   }
+  html{scroll-behavior:smooth}
 
   body{
     margin:0;
-    font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
     color:var(--ink);
-    background:#f7f6fb;
+    line-height:1.65;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+    background:
+      radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 30%, #f7f7fb 60%, #f9f9fb 100%) fixed;
+    opacity:0;
+    transition:opacity .5s ease;
   }
+  body.page-in{opacity:1}
 
   a{color:var(--brand); text-decoration:none}
-  a:hover{text-decoration:underline}
 
-  /* ---------- HERO ---------- */
+  /* ---------- Clickable Highlight ---------- */
+  .clickable{
+    position:relative;
+    display:inline-block;
+    transition:transform .25s ease, color .25s ease;
+    cursor:pointer;
+  }
+  .clickable::after{
+    content:" →";
+    opacity:0;
+    transition:opacity .25s ease, transform .25s ease;
+    transform:translateX(-6px);
+  }
+  .clickable:hover{
+    color:var(--brand-2);
+    transform:translateY(-1px);
+  }
+  .clickable:hover::after{
+    opacity:1;
+    transform:translateX(0);
+  }
+
+  /* ---------- Hero ---------- */
   .hero{
-    padding:100px 20px 80px;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
+    position:relative;
+    overflow:hidden;
     color:#fff;
     text-align:center;
+    padding: clamp(64px, 12vw, 140px) 20px 64px;
+    background: linear-gradient(135deg,var(--brand),var(--brand-2));
   }
-  .hero h1{margin:0;font-size:42px}
-  .hero p{margin:10px 0 0;opacity:.95}
+
+  .hero h1{margin:0 0 .3rem; font-size: clamp(28px, 4vw, 40px)}
+  .hero p{margin:.15rem 0; opacity:.95}
 
   .hero .chip{
-    display:inline-block;
-    margin-top:16px;
-    padding:8px 16px;
+    display:inline-flex;
+    gap:8px;
+    padding:8px 12px;
     border-radius:999px;
-    background:rgba(255,255,255,.2);
-    font-size:14px;
+    background:rgba(255,255,255,.18);
+    border:1px solid rgba(255,255,255,.25);
+    margin-top:10px;
   }
 
-  /* ---------- WRAPPER ---------- */
-  .wrap{
-    max-width:1100px;
-    margin:auto;
-    padding:60px 20px;
+  /* ---------- Nav ---------- */
+  .nav{
+    position:sticky;
+    top:0;
+    z-index:20;
+    display:flex;
+    justify-content:center;
+    backdrop-filter: blur(10px);
+    background:rgba(255,255,255,.55);
+    border-bottom:1px solid rgba(0,0,0,.06);
   }
 
-  /* ---------- SECTION HEADER ---------- */
-  .section-head{
-    max-width:720px;
-    margin-bottom:36px;
-  }
-  .section-head h2{
-    margin:0;
-    color:var(--brand);
-    font-size:28px;
-  }
-  .section-head p{
-    margin:10px 0 0;
-    color:var(--muted);
-    font-size:16px;
+  .nav-inner{
+    display:flex;
+    gap:18px;
+    padding:10px 16px;
   }
 
-  /* ---------- THESIS ---------- */
-  .thesis{
+  .nav a{
+    padding:8px 10px;
+    border-radius:10px;
+    font-weight:600;
+  }
+
+  /* ---------- Sections ---------- */
+  .wrap{max-width:980px; margin:auto; padding:32px 18px}
+
+  section.card{
     background:var(--glass);
-    padding:36px;
     border-radius:var(--radius);
+    box-shadow: var(--shadow);
+    padding:26px;
+    margin:36px 0;
+    backdrop-filter: blur(14px);
+
+    opacity:0;
+    transform:translateY(40px);
+    transition:
+      opacity .9s ease,
+      transform .9s ease;
+  }
+
+  section.card.show{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+  section.card.fade-out{
+    opacity:.25;
+    transform:translateY(-20px);
+  }
+
+  h2{color:var(--brand); margin-bottom:1rem}
+  h3{margin-top:1.2rem}
+
+  ul{margin-left:1.25rem}
+
+  /* ---------- About ---------- */
+  .about-flex{
+    display:flex;
+    gap:22px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+
+  .about-flex img{
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    object-fit:cover;
+    box-shadow: var(--shadow);
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:12px;
+    justify-content:center;
+  }
+
+  .gallery img{
+    max-width:280px;
+    border-radius:14px;
     box-shadow:var(--shadow);
-    margin-top:-80px;
+    background:#fff;
   }
 
-  /* ---------- JOURNEY ---------- */
-  .timeline{
-    display:grid;
-    grid-template-columns:1fr 3fr;
-    gap:40px;
-  }
-  .timeline-line{
-    border-left:3px solid var(--brand);
-    margin-left:12px;
-  }
-  .entry{
-    margin-bottom:40px;
-    padding-left:24px;
-  }
-  .entry h3{margin:0}
-  .entry ul{margin:8px 0 0 18px}
-
-  /* ---------- PROJECTS ---------- */
-  .projects{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:30px;
-  }
-  .project{
-    background:var(--glass);
-    padding:28px;
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    transition:transform .25s ease;
-  }
-  .project:hover{transform:translateY(-6px)}
-
-  .project.featured{
-    grid-column:span 2;
-  }
-
-  .project h3{margin-top:0}
-  .project ul{margin-left:18px}
-
-  /* ---------- SKILLS ---------- */
-  .skills{
-    background:var(--glass);
-    padding:30px;
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-  }
-
-  /* ---------- FOOTER ---------- */
-  footer{
+  /* ---------- Button ---------- */
+  .btn{
+    display:inline-flex;
+    padding:10px 14px;
+    border-radius:12px;
     background:linear-gradient(135deg,var(--brand),var(--brand-2));
     color:#fff;
-    text-align:center;
-    padding:30px;
+    font-weight:700;
+    box-shadow: var(--shadow);
   }
 
-  @media(max-width:900px){
-    .timeline{grid-template-columns:1fr}
-    .projects{grid-template-columns:1fr}
-    .project.featured{grid-column:span 1}
+  footer{
+    color:#fff;
+    background:linear-gradient(135deg,var(--brand),var(--brand-2));
+    text-align:center;
+    padding:22px;
   }
 </style>
 </head>
@@ -145,122 +191,112 @@
 
 <header class="hero">
   <h1>Zhengzhao (Ken) Li</h1>
-  <p>B.S. Mechanical Engineering — University of Washington</p>
+  <p>B.S. in Mechanical Engineering — University of Washington</p>
   <div class="chip">Seattle, WA • zzli0403@uw.edu</div>
 </header>
 
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#about">About</a>
+    <a href="#journey">Journey</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
 <main class="wrap">
 
-<!-- THESIS -->
-<section class="thesis">
-  <p>
-    I am a mechanically driven engineer with a strong foundation in hands-on design, mechatronics,
-    and system integration. My work spans competition robotics, academic design-build projects,
-    and industry internships focused on reliability, manufacturing, and real-world constraints.
-  </p>
-</section>
-
-<!-- JOURNEY -->
-<section>
-  <div class="section-head">
-    <h2>Engineering Journey</h2>
-    <p>From early robotics leadership to academic and industry engineering experience.</p>
-  </div>
-
-  <div class="timeline">
-    <div class="timeline-line"></div>
+<section id="about" class="card">
+  <div class="about-flex">
+    <img src="images/SELFIE.jpg" alt="portrait">
     <div>
-      <div class="entry">
-        <h3>VEX Robotics (2018–2022)</h3>
-        <ul>
-          <li>Co-Founder & Team Leader, Invincible Planck</li>
-          <li>International competition experience</li>
-          <li>Asia-Pacific & China Final awards</li>
-        </ul>
-      </div>
-
-      <div class="entry">
-        <h3>University of Washington (2022–Present)</h3>
-        <ul>
-          <li>B.S. Mechanical Engineering (GPA 3.56)</li>
-          <li>Teaching Assistant for ME 123</li>
-          <li>James B. Morrison Endowed Scholarship</li>
-        </ul>
-      </div>
-
-      <div class="entry">
-        <h3><a href="bosch.html">Bosch — XC-CT EHW Technician Internship</a></h3>
-        <ul>
-          <li>PCB rework, diagnostics, documentation</li>
-          <li>High-reliability testing environment</li>
-        </ul>
-      </div>
-
-      <div class="entry">
-        <h3><a href="yanjan.html">Yanjan USA LLC — Engineer Internship</a></h3>
-        <ul>
-          <li>Preventive maintenance & production documentation</li>
-          <li>Manufacturing reliability improvement</li>
-        </ul>
-      </div>
+      <h2>About Me</h2>
+      <p>Ever since childhood, I’ve been fascinated by engines and mechanical design...</p>
+      <p>That enthusiasm has carried through my Mechanical Engineering studies at UW...</p>
     </div>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section>
-  <div class="section-head">
-    <h2>Featured Projects</h2>
-    <p>Design-build projects emphasizing mechanical clarity and system-level thinking.</p>
-  </div>
+<section id="journey" class="card">
+  <h2>Engineering Journey</h2>
 
-  <div class="projects">
-    <a href="candybowl.html" class="project featured">
-      <h3>Reimagined Candy Bowl — ME 493</h3>
-      <ul>
-        <li>Magnet-powered mechanical candy launcher</li>
-        <li>Designed for UW Engineering outreach</li>
-      </ul>
+  <h3>VEX Robotics (2018–2022)</h3>
+  <ul>
+    <li>Co-Founder & Team Leader</li>
+    <li>International competitions</li>
+  </ul>
+
+  <h3>University of Washington (2022–Present)</h3>
+  <ul>
+    <li>B.S. Mechanical Engineering (GPA 3.56)</li>
+    <li>Teaching Assistant for ME 123</li>
+  </ul>
+
+  <h3>
+    <a href="bosch.html" class="clickable">
+      Bosch XC-CT EHW Technician Internship
     </a>
+  </h3>
 
-    <a href="scooter.html" class="project featured">
-      <h3>Self-Balancing Remote-Controlled Scooter — ME 480</h3>
-      <ul>
-        <li>IMU-based balance control</li>
-        <li>Remote steering, throttle, braking, kickstand</li>
-      </ul>
+  <h3>
+    <a href="yanjan.html" class="clickable">
+      Yanjan USA LLC Engineer Internship
     </a>
-
-    <div class="project">
-      <h3>F1 Car Assembly — ME 123</h3>
-      <ul>
-        <li>Complete SolidWorks assembly from reference</li>
-        <li>Advanced mating, exploded views, rendering</li>
-      </ul>
-    </div>
-  </div>
+  </h3>
 </section>
 
-<!-- SKILLS -->
-<section>
-  <div class="section-head">
-    <h2>Technical Skills</h2>
-  </div>
-  <div class="skills">
-    <ul>
-      <li>CAD: SolidWorks (CSWA), Fusion 360</li>
-      <li>Fabrication: 3D Printing, Machining</li>
-      <li>Programming: C/C++, Arduino, MATLAB, Python</li>
-      <li>Analysis: Statics, Dynamics, System Modeling</li>
-    </ul>
-  </div>
+<section id="projects" class="card">
+  <h2>Featured Projects</h2>
+
+  <h3>
+    <a href="candybowl.html" class="clickable">
+      Reimagined Candy Bowl — ME 493
+    </a>
+  </h3>
+
+  <h3>
+    <a href="scooter.html" class="clickable">
+      Self-Balancing Remote-Controlled Scooter — ME 480
+    </a>
+  </h3>
+</section>
+
+<section id="skills" class="card">
+  <h2>Technical Skills</h2>
+  <ul>
+    <li>SolidWorks (CSWA), Fusion 360</li>
+    <li>C/C++, Arduino, MATLAB, Python</li>
+  </ul>
+</section>
+
+<section id="contact" class="card">
+  <h2>Contact</h2>
+  <a class="btn" href="mailto:zzli0403@uw.edu">Email Me</a>
 </section>
 
 </main>
 
-<footer>
-  © 2025 Zhengzhao (Ken) Li
-</footer>
+<footer>© 2025 Zhengzhao (Ken) Li</footer>
+
+<script>
+  window.addEventListener('load', () => document.body.classList.add('page-in'));
+
+  const sections = document.querySelectorAll('section.card');
+
+  const observer = new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+        entry.target.classList.remove('fade-out');
+      } else {
+        entry.target.classList.add('fade-out');
+      }
+    });
+  },{threshold:0.35});
+
+  sections.forEach(sec=>observer.observe(sec));
+</script>
 
 </body>
 </html>
