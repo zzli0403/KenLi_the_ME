@@ -6,7 +6,6 @@
 <title>Zhengzhao (Ken) Li – Mechanical Engineering Portfolio</title>
 
 <style>
-  /* ---------- Base / Reset ---------- */
   * { box-sizing: border-box }
   :root{
     --ink:#1b1b1f;
@@ -212,8 +211,23 @@
     <img src="images/SELFIE.jpg" alt="portrait">
     <div>
       <h2>About Me</h2>
-      <p>Ever since childhood, I’ve been fascinated by engines and mechanical design...</p>
-      <p>That enthusiasm has carried through my Mechanical Engineering studies at UW...</p>
+      <p>
+        I have been drawn to mechanical systems from an early age, fascinated by how engines,
+        linkages, and mechanisms transform simple inputs into controlled motion.
+        That curiosity evolved into hands-on experience when I founded my junior high’s first robotics club,
+        leading a VEX Robotics team through multiple competitive seasons and international events.
+      </p>
+      <p>
+        At the University of Washington, I am pursuing a B.S. in Mechanical Engineering (GPA 3.59),
+        serving as a teaching assistant for ME 123 while developing strong foundations in mechanics,
+        design, manufacturing, and mechatronics.
+        My internships at Bosch and Yanjan further grounded my academic work in real-world engineering environments,
+        where reliability, documentation, and cross-disciplinary collaboration are critical.
+      </p>
+      <p>
+        I enjoy projects that sit at the intersection of mechanical design and system integration,
+        where thoughtful engineering decisions directly impact performance, robustness, and user experience.
+      </p>
     </div>
   </div>
 </section>
@@ -223,27 +237,37 @@
 
   <h3>VEX Robotics (2018–2022)</h3>
   <ul>
-    <li>Co-Founder & Team Leader</li>
-    <li>International competitions</li>
+    <li>Co-Founder & Team Leader, Invincible Planck VEX Team</li>
+    <li>Led mechanical design, prototyping, and competition preparation</li>
+    <li>Awards include Asia-Pacific and China Final honors</li>
   </ul>
 
   <h3>University of Washington (2022–Present)</h3>
   <ul>
-    <li>B.S. Mechanical Engineering (GPA 3.56)</li>
-    <li>Teaching Assistant for ME 123</li>
+    <li>B.S. Mechanical Engineering (GPA 3.59)</li>
+    <li>Teaching Assistant for ME 123 (CAD & engineering fundamentals)</li>
+    <li>James B. Morrison Endowed Scholarship recipient</li>
   </ul>
 
   <h3>
     <a href="bosch.html" class="clickable">
-      Bosch XC-CT EHW Technician Internship
+      Bosch — XC-CT EHW Technician Internship
     </a>
   </h3>
+  <p>
+    Supported high-reliability electronics testing through PCB rework,
+    diagnostics, and technical documentation in a production-critical environment.
+  </p>
 
   <h3>
     <a href="yanjan.html" class="clickable">
-      Yanjan USA LLC Engineer Internship
+      Yanjan USA LLC — Engineer Internship
     </a>
   </h3>
+  <p>
+    Worked on preventive maintenance, production documentation, and reliability improvement
+    for manufacturing systems through cross-functional collaboration.
+  </p>
 </section>
 
 <section id="projects" class="card">
@@ -254,36 +278,64 @@
       Reimagined Candy Bowl — ME 493
     </a>
   </h3>
+  <ul>
+    <li>Magnet-powered mechanical candy dispenser emphasizing simplicity and reliability</li>
+    <li>Iterative mechanical redesign validated through physical testing</li>
+    <li>Designed for UW Engineering outreach and public engagement</li>
+  </ul>
 
   <h3>
     <a href="scooter.html" class="clickable">
       Self-Balancing Remote-Controlled Scooter — ME 480
     </a>
   </h3>
+  <ul>
+    <li>Two-wheel self-balancing platform using IMU-based control</li>
+    <li>Remote steering, throttle, braking, and kickstand actuation</li>
+    <li>Integrated mechanical design, electronics, and embedded control</li>
+  </ul>
+
+  <h3>F1 Car Assembly — ME 123 Final Project</h3>
+  <ul>
+    <li>Complete SolidWorks assembly created from reference data</li>
+    <li>Advanced part mating, exploded views, and photorealistic rendering</li>
+    <li>Demonstrated design intent, motion understanding, and CAD best practices</li>
+  </ul>
+
+  <div class="gallery">
+    <img src="images/ME123 F1-1.png" alt="F1 CAD view">
+    <img src="images/ME123 F1-3.JPG" alt="F1 render">
+    <img src="images/ME123 F1-2.png" alt="F1 side view">
+  </div>
 </section>
 
 <section id="skills" class="card">
   <h2>Technical Skills</h2>
   <ul>
-    <li>SolidWorks (CSWA), Fusion 360</li>
-    <li>C/C++, Arduino, MATLAB, Python</li>
+    <li><strong>CAD & Design:</strong> SolidWorks (CSWA Certified), Fusion 360, assemblies, GD&T fundamentals</li>
+    <li><strong>Fabrication:</strong> 3D printing, laser cutting, basic machining, prototyping</li>
+    <li><strong>Programming:</strong> C/C++, Arduino, MATLAB, Python</li>
+    <li><strong>Mechatronics:</strong> Sensors, actuators, motor control, embedded systems integration</li>
+    <li><strong>Analysis:</strong> Statics, dynamics, system modeling, tolerance analysis</li>
+    <li><strong>Tools:</strong> Multimeter, soldering, test equipment, technical documentation</li>
+    <li><strong>Languages:</strong> English (Fluent), Mandarin (Native), French (Beginner)</li>
   </ul>
 </section>
 
 <section id="contact" class="card">
   <h2>Contact</h2>
+  <p>If you'd like to collaborate or discuss engineering opportunities, feel free to reach out.</p>
   <a class="btn" href="mailto:zzli0403@uw.edu">Email Me</a>
 </section>
 
 </main>
 
-<footer>© 2025 Zhengzhao (Ken) Li</footer>
+<footer>© 2025 Zhengzhao (Ken) Li — All Rights Reserved</footer>
 
 <script>
   window.addEventListener('load', () => document.body.classList.add('page-in'));
 
   const sections = document.querySelectorAll('section.card');
-
   const observer = new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
       if(entry.isIntersecting){
