@@ -6,7 +6,6 @@
 <title>Zhengzhao (Ken) Li – Mechanical Engineering Portfolio</title>
 
 <style>
-  /* ---------- Base / Reset ---------- */
   * { box-sizing: border-box }
   :root{
     --ink:#1b1b1f;
@@ -19,7 +18,7 @@
   }
   html{scroll-behavior:smooth}
   body{
-    margin:0; color:var(--ink); line-height:1.65;
+    margin:0;
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
     background:
       radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 30%, #f7f7fb 60%, #f9f9fb 100%) fixed;
@@ -30,93 +29,92 @@
 
   /* ---------- Hero ---------- */
   .hero{
-    position:relative; overflow:hidden; color:#fff; text-align:center;
-    padding: clamp(64px, 12vw, 140px) 20px 64px;
-    background: linear-gradient(135deg,var(--brand),var(--brand-2));
+    text-align:center; color:#fff;
+    padding:clamp(64px,12vw,140px) 20px 64px;
+    background:linear-gradient(135deg,var(--brand),var(--brand-2));
   }
-  .hero h1{margin:0 0 .3rem; font-size: clamp(30px, 4vw, 42px)}
-  .hero p{margin:.15rem 0; opacity:.95}
+  .hero h1{margin:0; font-size:clamp(30px,4vw,42px)}
+  .hero p{margin:.4rem 0; opacity:.95}
   .hero .chip{
-    display:inline-flex; gap:8px; align-items:center;
-    padding:8px 12px; border-radius:999px;
+    display:inline-flex; gap:10px;
+    padding:8px 14px; border-radius:999px;
     background:rgba(255,255,255,.18);
-    backdrop-filter: blur(6px);
+    backdrop-filter:blur(6px);
     border:1px solid rgba(255,255,255,.25);
-    margin-top:10px
   }
 
   /* ---------- Nav ---------- */
   .nav{
     position:sticky; top:0; z-index:20;
-    backdrop-filter: blur(10px);
-    background:rgba(255,255,255,.55);
+    background:rgba(255,255,255,.6);
+    backdrop-filter:blur(10px);
     border-bottom:1px solid rgba(0,0,0,.06);
   }
   .nav-inner{
     display:flex; justify-content:center; gap:18px;
     padding:10px 16px; flex-wrap:wrap;
   }
-  .nav a{
-    font-weight:600; color:var(--brand);
-    padding:8px 10px; border-radius:10px;
-  }
+  .nav a{font-weight:600; color:var(--brand)}
 
   /* ---------- Layout ---------- */
-  .wrap{max-width:980px; margin:auto; padding:32px 18px}
+  .wrap{max-width:1000px; margin:auto; padding:32px 18px}
   section.card{
     background:var(--glass);
-    border:1px solid rgba(0,0,0,.06);
     border-radius:var(--radius);
-    box-shadow: var(--shadow);
-    padding:26px clamp(18px, 3vw, 28px);
+    box-shadow:var(--shadow);
+    padding:28px;
     margin:28px 0;
-    backdrop-filter: blur(14px);
+    backdrop-filter:blur(14px);
     opacity:0; transform:translateY(28px);
     transition:opacity .8s ease, transform .8s ease;
   }
   section.card.show{opacity:1; transform:translateY(0)}
-  h2{color:var(--brand); margin:.1rem 0 1rem}
-  h3{margin:1.1rem 0 .3rem}
-  ul{margin:.4rem 0 .8rem 1.25rem}
+  h2{color:var(--brand)}
+  h3{margin:.8rem 0 .4rem}
+  ul{margin:.4rem 0 .8rem 1.2rem}
 
-  /* ---------- Clickable Cards ---------- */
-  .card-link{
-    display:block;
-    color:inherit;
-    margin-bottom:16px;
-  }
-  .card-link .project,
-  .card-link .experience{
+  /* ---------- Clickable Showcase Cards ---------- */
+  .showcase{
     border-radius:var(--radius);
-    padding:6px 2px;
-    transition:transform .25s ease, box-shadow .25s ease, background .25s ease;
+    padding:22px;
+    transition:box-shadow .25s ease, transform .25s ease;
+    border:1px solid rgba(0,0,0,.05);
   }
-  .card-link:hover .project,
-  .card-link:hover .experience{
-    transform:translateY(-4px);
-    box-shadow:0 14px 34px rgba(0,0,0,.18);
+  .showcase:hover{
+    transform:translateY(-2px);
+    box-shadow:0 18px 40px rgba(0,0,0,.18);
     background:rgba(255,255,255,.85);
   }
-  .card-cta{
-    margin-top:6px;
+  .cta{
+    margin-top:10px;
     font-weight:700;
     color:var(--brand);
-    font-size:.9em;
+    display:inline-block;
   }
 
   /* ---------- About ---------- */
-  .about-flex{display:flex; gap:22px; align-items:center; flex-wrap:wrap}
+  .about-flex{
+    display:flex; gap:24px; align-items:center; flex-wrap:wrap;
+  }
   .about-flex img{
-    width:220px; height:220px; border-radius:50%;
-    object-fit:cover; box-shadow:var(--shadow)
+    width:220px; height:220px;
+    border-radius:50%; object-fit:cover;
+    box-shadow:var(--shadow);
   }
 
-  /* ---------- Footer ---------- */
+  /* ---------- Gallery ---------- */
+  .gallery{
+    display:flex; gap:14px; flex-wrap:wrap; margin-top:12px;
+  }
+  .gallery img{
+    max-width:280px; border-radius:14px;
+    box-shadow:var(--shadow);
+    background:#fff;
+  }
+
   footer{
-    color:#fff;
     background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    text-align:center;
-    padding:22px
+    color:#fff; text-align:center; padding:22px;
   }
 </style>
 </head>
@@ -124,10 +122,8 @@
 <body>
 <header class="hero">
   <h1>Zhengzhao (Ken) Li</h1>
-  <p>Mechanical engineer focused on mechanical systems, mechatronics, and real-world prototyping</p>
-  <div class="chip">
-    <span>Seattle, WA</span> • <span>zzli0403@uw.edu</span>
-  </div>
+  <p>Mechanical engineer focused on mechanical systems, mechatronics, and prototyping</p>
+  <div class="chip">Seattle, WA • zzli0403@uw.edu</div>
 </header>
 
 <nav class="nav">
@@ -148,10 +144,12 @@
     <div>
       <h2>About Me</h2>
       <p>
-        I’m a mechanical engineering student at the University of Washington with a strong interest
-        in mechanical systems, mechatronics, and hands-on prototyping. From founding a robotics club
-        in junior high to leading complex system builds in university design courses, I enjoy turning
-        abstract ideas into reliable physical systems.
+        From founding a robotics club in junior high to leading system-level design projects at UW,
+        I enjoy translating abstract engineering ideas into reliable physical systems.
+      </p>
+      <p>
+        My experience spans mechanical design, mechatronics, and manufacturing environments,
+        supported by internships at Bosch and Yanjan and hands-on academic projects.
       </p>
     </div>
   </div>
@@ -160,54 +158,67 @@
 <section id="journey" class="card">
   <h2>Engineering Journey</h2>
 
-  <a href="bosch.html" class="card-link">
-    <div class="experience">
-      <h3>Bosch — XC-CT EHW Technician Internship</h3>
-      <ul>
-        <li>PCB rework, diagnostics, and documentation</li>
-        <li>High-reliability testing environment</li>
-      </ul>
-      <div class="card-cta">→ View internship details</div>
-    </div>
+  <div class="showcase">
+    <h3>VEX Robotics (2018–2022)</h3>
+    <ul>
+      <li>Co-Founder & Team Leader, Invincible Planck</li>
+      <li>International competition experience</li>
+      <li>Asia-Pacific & China Final awards</li>
+    </ul>
+  </div>
+
+  <a href="bosch.html" class="showcase">
+    <h3>Bosch — XC-CT EHW Technician Internship</h3>
+    <ul>
+      <li>PCB rework, diagnostics, documentation</li>
+      <li>High-reliability testing environment</li>
+    </ul>
+    <span class="cta">→ View internship details</span>
   </a>
 
-  <a href="yanjan.html" class="card-link">
-    <div class="experience">
-      <h3>Yanjan USA LLC — Engineer Internship</h3>
-      <ul>
-        <li>Preventive maintenance and production documentation</li>
-        <li>Manufacturing reliability improvement</li>
-      </ul>
-      <div class="card-cta">→ View internship details</div>
-    </div>
+  <a href="yanjan.html" class="showcase">
+    <h3>Yanjan USA LLC — Engineer Internship</h3>
+    <ul>
+      <li>Preventive maintenance & production documentation</li>
+      <li>Manufacturing reliability improvement</li>
+    </ul>
+    <span class="cta">→ View internship details</span>
   </a>
 </section>
 
 <section id="projects" class="card">
   <h2>Featured Projects</h2>
 
-  <a href="candybowl.html" class="card-link">
-    <div class="project">
-      <h3>Reimagined Candy Bowl — ME 493</h3>
-      <ul>
-        <li>Purely mechanical magnet-powered candy launcher</li>
-        <li>Designed for UW Engineering outreach engagement</li>
-      </ul>
-      <div class="card-cta">→ View full project</div>
-    </div>
+  <a href="candybowl.html" class="showcase">
+    <h3>Reimagined Candy Bowl — ME 493</h3>
+    <ul>
+      <li>Purely mechanical magnet-powered candy launcher</li>
+      <li>Designed for UW Engineering outreach</li>
+    </ul>
+    <span class="cta">→ View full project</span>
   </a>
 
-  <a href="scooter.html" class="card-link">
-    <div class="project">
-      <h3>Self-Balancing Remote-Controlled Scooter — ME 480</h3>
-      <ul>
-        <li>Riderless balance using IMU feedback</li>
-        <li>Remote steering, throttle, braking, kickstand</li>
-      </ul>
-      <div class="card-cta">→ View full project</div>
-    </div>
+  <a href="scooter.html" class="showcase">
+    <h3>Self-Balancing Remote-Controlled Scooter — ME 480</h3>
+    <ul>
+      <li>IMU-based balance control</li>
+      <li>Remote steering, throttle, braking, kickstand</li>
+    </ul>
+    <span class="cta">→ View full project</span>
   </a>
 
+  <div class="showcase">
+    <h3>F1 Car Assembly — ME 123 Final Project</h3>
+    <ul>
+      <li>Full SolidWorks assembly from reference</li>
+      <li>Advanced mating, exploded views, rendering</li>
+    </ul>
+    <div class="gallery">
+      <img src="images/ME123 F1-1.png">
+      <img src="images/ME123 F1-3.JPG">
+      <img src="images/ME123 F1-2.png">
+    </div>
+  </div>
 </section>
 
 <section id="skills" class="card">
@@ -215,7 +226,7 @@
   <ul>
     <li><strong>CAD:</strong> SolidWorks (CSWA), Fusion 360</li>
     <li><strong>Fabrication:</strong> 3D printing, machining, laser cutting</li>
-    <li><strong>Programming:</strong> Arduino, C/C++, MATLAB, Python</li>
+    <li><strong>Programming:</strong> Arduino, MATLAB, Python</li>
     <li><strong>Analysis:</strong> Statics, Dynamics, System Modeling</li>
   </ul>
 </section>
@@ -223,18 +234,16 @@
 <section id="contact" class="card">
   <h2>Contact</h2>
   <p>Interested in collaboration or engineering opportunities?</p>
-  <a href="mailto:zzli0403@uw.edu" class="card-cta">→ Email me</a>
+  <a href="mailto:zzli0403@uw.edu" class="cta">→ Email me</a>
 </section>
 
 </main>
 
-<footer>
-  © 2025 Zhengzhao (Ken) Li
-</footer>
+<footer>© 2025 Zhengzhao (Ken) Li</footer>
 
 <script>
   window.addEventListener('load',()=>document.body.classList.add('page-in'));
-  const io=new IntersectionObserver((e)=>e.forEach(x=>{
+  const io=new IntersectionObserver(e=>e.forEach(x=>{
     if(x.isIntersecting){x.target.classList.add('show');io.unobserve(x.target)}
   }),{threshold:.15});
   document.querySelectorAll('section.card').forEach(s=>io.observe(s));
