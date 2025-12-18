@@ -6,183 +6,185 @@
 <title>Zhengzhao (Ken) Li – Mechanical Engineering Portfolio</title>
 
 <style>
-  * { box-sizing: border-box }
-  :root{
-    --ink:#1b1b1f;
-    --muted:#666;
-    --brand:#4b0082;
-    --brand-2:#6a0dad;
-    --glass: rgba(255,255,255,.65);
-    --shadow: 0 10px 30px rgba(0,0,0,.15);
-    --radius: 18px;
-  }
-  html{scroll-behavior:smooth}
+/* ---------- Base ---------- */
+* { box-sizing: border-box }
+:root{
+  --ink:#1b1b1f;
+  --muted:#666;
+  --brand:#4b0082;
+  --brand-2:#6a0dad;
+  --glass: rgba(255,255,255,.7);
+  --shadow: 0 12px 32px rgba(0,0,0,.14);
+  --radius: 18px;
+}
+html{scroll-behavior:smooth}
 
-  body{
-    margin:0;
-    color:var(--ink);
-    line-height:1.65;
-    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-    background:
-      radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 30%, #f7f7fb 60%, #f9f9fb 100%) fixed;
-    opacity:0;
-    transition:opacity .5s ease;
-  }
-  body.page-in{opacity:1}
+body{
+  margin:0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color:var(--ink);
+  line-height:1.65;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 30%, #f7f7fb 60%, #f9f9fb 100%) fixed;
+  opacity:0;
+  transition:opacity .5s ease;
+}
+body.page-in{opacity:1}
+a{color:var(--brand); text-decoration:none}
 
-  a{color:var(--brand); text-decoration:none}
+/* ---------- Clickable Energy ---------- */
+.clickable{
+  position:relative;
+  font-weight:600;
+  transition:color .25s ease, transform .25s ease;
+}
+.clickable::after{
+  content:" →";
+  opacity:0;
+  transition:opacity .25s ease, transform .25s ease;
+  transform:translateX(-6px);
+}
+.clickable:hover{
+  color:var(--brand-2);
+  transform:translateY(-1px);
+}
+.clickable:hover::after{
+  opacity:1;
+  transform:translateX(0);
+}
 
-  /* ---------- Clickable Highlight ---------- */
-  .clickable{
-    position:relative;
-    display:inline-block;
-    transition:transform .25s ease, color .25s ease;
-    cursor:pointer;
-  }
-  .clickable::after{
-    content:" →";
-    opacity:0;
-    transition:opacity .25s ease, transform .25s ease;
-    transform:translateX(-6px);
-  }
-  .clickable:hover{
-    color:var(--brand-2);
-    transform:translateY(-1px);
-  }
-  .clickable:hover::after{
-    opacity:1;
-    transform:translateX(0);
-  }
+/* ---------- Hero ---------- */
+.hero{
+  color:#fff;
+  text-align:center;
+  padding: clamp(72px, 12vw, 140px) 20px 64px;
+  background: linear-gradient(135deg,var(--brand),var(--brand-2));
+}
+.hero h1{margin:0;font-size:clamp(28px,4vw,40px)}
+.hero p{margin:.25rem 0;opacity:.95}
+.hero .chip{
+  display:inline-flex;
+  gap:8px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.25);
+  margin-top:12px;
+}
 
-  /* ---------- Hero ---------- */
-  .hero{
-    position:relative;
-    overflow:hidden;
-    color:#fff;
-    text-align:center;
-    padding: clamp(64px, 12vw, 140px) 20px 64px;
-    background: linear-gradient(135deg,var(--brand),var(--brand-2));
-  }
+/* ---------- Nav ---------- */
+.nav{
+  position:sticky; top:0; z-index:20;
+  backdrop-filter: blur(10px);
+  background:rgba(255,255,255,.6);
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+.nav-inner{
+  display:flex; gap:18px;
+  justify-content:center;
+  padding:10px 16px;
+}
+.nav a{
+  padding:8px 10px;
+  border-radius:10px;
+  font-weight:600;
+}
+.nav a:hover{background:rgba(75,0,130,.08)}
 
-  .hero h1{margin:0 0 .3rem; font-size: clamp(28px, 4vw, 40px)}
-  .hero p{margin:.15rem 0; opacity:.95}
+/* ---------- Layout ---------- */
+.wrap{max-width:980px;margin:auto;padding:32px 18px}
 
-  .hero .chip{
-    display:inline-flex;
-    gap:8px;
-    padding:8px 12px;
-    border-radius:999px;
-    background:rgba(255,255,255,.18);
-    border:1px solid rgba(255,255,255,.25);
-    margin-top:10px;
-  }
+/* ---------- Section Card (Creative Enhancement) ---------- */
+section.card{
+  position:relative;
+  background:var(--glass);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:28px;
+  margin:42px 0;
+  backdrop-filter: blur(14px);
 
-  /* ---------- Nav ---------- */
-  .nav{
-    position:sticky;
-    top:0;
-    z-index:20;
-    display:flex;
-    justify-content:center;
-    backdrop-filter: blur(10px);
-    background:rgba(255,255,255,.55);
-    border-bottom:1px solid rgba(0,0,0,.06);
-  }
+  opacity:0;
+  transform:translateY(40px);
+  transition:opacity .9s ease, transform .9s ease;
+}
+section.card::before{
+  content:"";
+  position:absolute;
+  left:0; top:18px; bottom:18px;
+  width:4px;
+  border-radius:4px;
+  background:linear-gradient(180deg,var(--brand),transparent);
+  opacity:.7;
+}
+section.card.show{
+  opacity:1;
+  transform:translateY(0);
+}
+section.card.fade-out{
+  opacity:.25;
+  transform:translateY(-18px);
+}
 
-  .nav-inner{
-    display:flex;
-    gap:18px;
-    padding:10px 16px;
-  }
+h2{color:var(--brand); margin-bottom:1rem}
+h3{margin-top:1.4rem}
+ul{margin-left:1.25rem}
 
-  .nav a{
-    padding:8px 10px;
-    border-radius:10px;
-    font-weight:600;
-  }
+/* ---------- About ---------- */
+.about-flex{
+  display:flex;
+  gap:24px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.about-flex img{
+  width:220px;
+  height:220px;
+  border-radius:50%;
+  object-fit:cover;
+  box-shadow:var(--shadow);
+}
 
-  /* ---------- Sections ---------- */
-  .wrap{max-width:980px; margin:auto; padding:32px 18px}
+/* ---------- Gallery (ME123 Fix) ---------- */
+.gallery{
+  display:flex;
+  gap:16px;
+  margin-top:14px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.gallery img{
+  width:100%;
+  max-width:260px;
+  height:160px;
+  object-fit:contain;
+  background:#fff;
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  transition:transform .25s ease;
+}
+.gallery img:hover{
+  transform:scale(1.04);
+}
 
-  section.card{
-    background:var(--glass);
-    border-radius:var(--radius);
-    box-shadow: var(--shadow);
-    padding:26px;
-    margin:36px 0;
-    backdrop-filter: blur(14px);
+/* ---------- Button ---------- */
+.btn{
+  display:inline-flex;
+  padding:10px 16px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:#fff;
+  font-weight:700;
+  box-shadow:var(--shadow);
+}
 
-    opacity:0;
-    transform:translateY(40px);
-    transition:
-      opacity .9s ease,
-      transform .9s ease;
-  }
-
-  section.card.show{
-    opacity:1;
-    transform:translateY(0);
-  }
-
-  section.card.fade-out{
-    opacity:.25;
-    transform:translateY(-20px);
-  }
-
-  h2{color:var(--brand); margin-bottom:1rem}
-  h3{margin-top:1.2rem}
-
-  ul{margin-left:1.25rem}
-
-  /* ---------- About ---------- */
-  .about-flex{
-    display:flex;
-    gap:22px;
-    align-items:center;
-    flex-wrap:wrap;
-  }
-
-  .about-flex img{
-    width:220px;
-    height:220px;
-    border-radius:50%;
-    object-fit:cover;
-    box-shadow: var(--shadow);
-  }
-
-  /* ---------- Gallery ---------- */
-  .gallery{
-    display:flex;
-    flex-wrap:wrap;
-    gap:14px;
-    margin-top:12px;
-    justify-content:center;
-  }
-
-  .gallery img{
-    max-width:280px;
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    background:#fff;
-  }
-
-  /* ---------- Button ---------- */
-  .btn{
-    display:inline-flex;
-    padding:10px 14px;
-    border-radius:12px;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    color:#fff;
-    font-weight:700;
-    box-shadow: var(--shadow);
-  }
-
-  footer{
-    color:#fff;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    text-align:center;
-    padding:22px;
-  }
+/* ---------- Footer ---------- */
+footer{
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:#fff;
+  text-align:center;
+  padding:22px;
+}
 </style>
 </head>
 
@@ -190,7 +192,7 @@
 
 <header class="hero">
   <h1>Zhengzhao (Ken) Li</h1>
-  <p>B.S. in Mechanical Engineering — University of Washington</p>
+  <p>B.S. Mechanical Engineering</p>
   <div class="chip">Seattle, WA • zzli0403@uw.edu</div>
 </header>
 
@@ -206,53 +208,48 @@
 
 <main class="wrap">
 
+<!-- About -->
 <section id="about" class="card">
   <div class="about-flex">
     <img src="images/SELFIE.jpg" alt="portrait">
     <div>
       <h2>About Me</h2>
       <p>
-        I have been drawn to mechanical systems from an early age, fascinated by how engines,
-        linkages, and mechanisms transform simple inputs into controlled motion.
-        That curiosity evolved into hands-on experience when I founded my junior high’s first robotics club,
-        leading a VEX Robotics team through multiple competitive seasons and international events.
+        I have been fascinated by mechanical systems from an early age, particularly how engines,
+        linkages, and mechanisms translate simple inputs into controlled motion.
+        That curiosity became hands-on when I founded my junior high’s first robotics club
+        and led a VEX Robotics team through multiple competitive seasons and international events.
       </p>
       <p>
-        At the University of Washington, I am pursuing a B.S. in Mechanical Engineering (GPA 3.59),
-        serving as a teaching assistant for ME 123 while developing strong foundations in mechanics,
-        design, manufacturing, and mechatronics.
-        My internships at Bosch and Yanjan further grounded my academic work in real-world engineering environments,
-        where reliability, documentation, and cross-disciplinary collaboration are critical.
-      </p>
-      <p>
-        I enjoy projects that sit at the intersection of mechanical design and system integration,
-        where thoughtful engineering decisions directly impact performance, robustness, and user experience.
+        Since then, my focus has been on design-build projects and real-world engineering problems,
+        combining mechanical design, mechatronics, and system integration.
+        I enjoy working on systems where thoughtful engineering decisions directly influence
+        performance, robustness, and user interaction.
       </p>
     </div>
   </div>
 </section>
 
+<!-- Journey -->
 <section id="journey" class="card">
   <h2>Engineering Journey</h2>
 
   <h3>VEX Robotics (2018–2022)</h3>
   <ul>
-    <li>Co-Founder & Team Leader, Invincible Planck VEX Team</li>
-    <li>Led mechanical design, prototyping, and competition preparation</li>
-    <li>Awards include Asia-Pacific and China Final honors</li>
+    <li>Co-Founder & Team Leader, Invincible Planck</li>
+    <li>Led mechanical design and competition preparation</li>
+    <li>Asia-Pacific & China Final awards</li>
   </ul>
 
-  <h3>University of Washington (2022–Present)</h3>
+  <h3>Academic Training</h3>
   <ul>
     <li>B.S. Mechanical Engineering (GPA 3.59)</li>
-    <li>Teaching Assistant for ME 123 (CAD & engineering fundamentals)</li>
-    <li>James B. Morrison Endowed Scholarship recipient</li>
+    <li>Teaching Assistant for ME 123</li>
+    <li>James B. Morrison Endowed Scholarship</li>
   </ul>
 
   <h3>
-    <a href="bosch.html" class="clickable">
-      Bosch — XC-CT EHW Technician Internship
-    </a>
+    <a href="bosch.html" class="clickable">Bosch — XC-CT EHW Technician Internship</a>
   </h3>
   <p>
     Supported high-reliability electronics testing through PCB rework,
@@ -260,71 +257,64 @@
   </p>
 
   <h3>
-    <a href="yanjan.html" class="clickable">
-      Yanjan USA LLC — Engineer Internship
-    </a>
+    <a href="yanjan.html" class="clickable">Yanjan USA LLC — Engineer Internship</a>
   </h3>
   <p>
-    Worked on preventive maintenance, production documentation, and reliability improvement
-    for manufacturing systems through cross-functional collaboration.
+    Contributed to preventive maintenance, production documentation,
+    and manufacturing reliability improvement through cross-functional collaboration.
   </p>
 </section>
 
+<!-- Projects -->
 <section id="projects" class="card">
   <h2>Featured Projects</h2>
 
   <h3>
-    <a href="candybowl.html" class="clickable">
-      Reimagined Candy Bowl — ME 493
-    </a>
+    <a href="candybowl.html" class="clickable">Reimagined Candy Bowl — ME 493</a>
   </h3>
-  <ul>
-    <li>Magnet-powered mechanical candy dispenser emphasizing simplicity and reliability</li>
-    <li>Iterative mechanical redesign validated through physical testing</li>
-    <li>Designed for UW Engineering outreach and public engagement</li>
-  </ul>
+  <p>
+    A magnet-powered mechanical candy dispenser designed to emphasize reliability,
+    simplicity, and engaging physical interaction for engineering outreach.
+  </p>
 
   <h3>
-    <a href="scooter.html" class="clickable">
-      Self-Balancing Remote-Controlled Scooter — ME 480
-    </a>
+    <a href="scooter.html" class="clickable">Self-Balancing Remote-Controlled Scooter — ME 480</a>
   </h3>
-  <ul>
-    <li>Two-wheel self-balancing platform using IMU-based control</li>
-    <li>Remote steering, throttle, braking, and kickstand actuation</li>
-    <li>Integrated mechanical design, electronics, and embedded control</li>
-  </ul>
+  <p>
+    A two-wheel self-balancing scooter integrating IMU-based control,
+    remote actuation, and mechanical design to enable riderless operation.
+  </p>
 
   <h3>F1 Car Assembly — ME 123 Final Project</h3>
   <ul>
     <li>Complete SolidWorks assembly created from reference data</li>
-    <li>Advanced part mating, exploded views, and photorealistic rendering</li>
-    <li>Demonstrated design intent, motion understanding, and CAD best practices</li>
+    <li>Advanced mating, exploded views, and photorealistic rendering</li>
+    <li>Demonstrated design intent and motion understanding</li>
   </ul>
 
   <div class="gallery">
-    <img src="images/ME123 F1-1.png" alt="F1 CAD view">
-    <img src="images/ME123 F1-3.JPG" alt="F1 render">
-    <img src="images/ME123 F1-2.png" alt="F1 side view">
+    <img src="images/ME123 F1-1.png" alt="F1 CAD">
+    <img src="images/ME123 F1-3.JPG" alt="F1 Render">
+    <img src="images/ME123 F1-2.png" alt="F1 Side">
   </div>
 </section>
 
+<!-- Skills -->
 <section id="skills" class="card">
   <h2>Technical Skills</h2>
   <ul>
-    <li><strong>CAD & Design:</strong> SolidWorks (CSWA Certified), Fusion 360, assemblies, GD&T fundamentals</li>
+    <li><strong>CAD & Design:</strong> SolidWorks (CSWA), Fusion 360, assemblies, design intent</li>
     <li><strong>Fabrication:</strong> 3D printing, laser cutting, basic machining, prototyping</li>
     <li><strong>Programming:</strong> C/C++, Arduino, MATLAB, Python</li>
-    <li><strong>Mechatronics:</strong> Sensors, actuators, motor control, embedded systems integration</li>
+    <li><strong>Mechatronics:</strong> Sensors, actuators, motor control, embedded integration</li>
     <li><strong>Analysis:</strong> Statics, dynamics, system modeling, tolerance analysis</li>
-    <li><strong>Tools:</strong> Multimeter, soldering, test equipment, technical documentation</li>
-    <li><strong>Languages:</strong> English (Fluent), Mandarin (Native), French (Beginner)</li>
   </ul>
 </section>
 
+<!-- Contact -->
 <section id="contact" class="card">
   <h2>Contact</h2>
-  <p>If you'd like to collaborate or discuss engineering opportunities, feel free to reach out.</p>
+  <p>If you'd like to collaborate or discuss engineering opportunities:</p>
   <a class="btn" href="mailto:zzli0403@uw.edu">Email Me</a>
 </section>
 
@@ -333,21 +323,20 @@
 <footer>© 2025 Zhengzhao (Ken) Li — All Rights Reserved</footer>
 
 <script>
-  window.addEventListener('load', () => document.body.classList.add('page-in'));
+window.addEventListener('load',()=>document.body.classList.add('page-in'));
 
-  const sections = document.querySelectorAll('section.card');
-  const observer = new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('show');
-        entry.target.classList.remove('fade-out');
-      } else {
-        entry.target.classList.add('fade-out');
-      }
-    });
-  },{threshold:0.35});
-
-  sections.forEach(sec=>observer.observe(sec));
+const sections=document.querySelectorAll('section.card');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('show');
+      e.target.classList.remove('fade-out');
+    } else {
+      e.target.classList.add('fade-out');
+    }
+  });
+},{threshold:0.35});
+sections.forEach(s=>observer.observe(s));
 </script>
 
 </body>
