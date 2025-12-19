@@ -20,43 +20,22 @@
 
 html{scroll-behavior:smooth}
 
-/* ---------- Background Enhancement (Option A) ---------- */
+/* ---------- Background Enhancement (Option C: Gradient Orbs) ---------- */
 body{
   margin:0;
   font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   color:var(--ink);
   line-height:1.65;
 
-  /* soft gradient */
   background:
-    radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 35%, #f7f7fb 70%, #f9f9fb 100%),
+    radial-gradient(600px 600px at 15% 10%, rgba(106,13,173,.18), transparent 60%),
+    radial-gradient(500px 500px at 85% 20%, rgba(75,0,130,.15), transparent 65%),
+    radial-gradient(700px 700px at 50% 90%, rgba(180,120,255,.12), transparent 70%),
+    linear-gradient(180deg, #faf6ff 0%, #f7f7fb 60%, #f9f9fb 100%);
 
-    /* subtle grid */
-    linear-gradient(to right, rgba(0,0,0,.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0,0,0,.035) 1px, transparent 1px);
-
-  background-size:
-    cover,
-    48px 48px,
-    48px 48px;
-
+  background-attachment: fixed;
   opacity:0;
   transition:opacity .5s ease;
-}
-
-body::after{
-  /* light noise grain */
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  background-image:
-    repeating-radial-gradient(circle at 0 0,
-      rgba(0,0,0,.02),
-      rgba(0,0,0,.02) 1px,
-      transparent 1px,
-      transparent 2px);
-  opacity:.25;
 }
 
 body.page-in{opacity:1}
@@ -243,15 +222,13 @@ footer{
       <h2>About Me</h2>
       <p>
         I am a mechanically driven engineer with a strong interest in how physical systems are
-        designed, built, and refined for real-world use.
-        My curiosity started early with engines and mechanisms and became hands-on through
-        competitive robotics, where I led mechanical design and iterative prototyping efforts.
+        designed, built, and refined for real-world use. My curiosity started early with engines
+        and mechanisms and became hands-on through competitive robotics.
       </p>
       <p>
-        I hold a B.S. in Mechanical Engineering (GPA 3.59) and enjoy working on design-build projects
-        that sit at the intersection of mechanical design, mechatronics, and system integration.
-        I’m particularly motivated by problems where thoughtful engineering decisions directly
-        improve reliability, performance, and user interaction.
+        I hold a B.S. in Mechanical Engineering (GPA 3.59) and enjoy design-build projects that
+        integrate mechanical design, mechatronics, and system-level thinking, especially where
+        engineering decisions directly impact reliability and performance.
       </p>
     </div>
   </div>
