@@ -106,6 +106,10 @@ h3{
   margin-top:1.3rem;
 }
 
+ul{
+  margin-left:1.25rem;
+}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
@@ -126,25 +130,6 @@ h3{
   margin-bottom:6px;
 }
 
-.media{
-  margin-top:18px;
-}
-
-.media img,
-.media video{
-  width:100%;
-  border-radius:16px;
-  background:#fff;
-  box-shadow:var(--shadow);
-}
-
-.caption{
-  color:var(--muted);
-  font-size:.92rem;
-  margin-top:8px;
-  text-align:center;
-}
-
 .two-col{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
@@ -152,8 +137,41 @@ h3{
   align-items:start;
 }
 
-ul{
-  margin-left:1.25rem;
+.media{
+  margin-top:18px;
+  text-align:center;
+}
+
+.media img,
+.media video{
+  width:100%;
+  height:auto;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.media-small img{
+  max-width:520px;
+}
+
+.media-medium img{
+  max-width:700px;
+}
+
+.media-large img{
+  max-width:900px;
+}
+
+.media-video video{
+  max-width:760px;
+}
+
+.caption{
+  color:var(--muted);
+  font-size:.92rem;
+  margin-top:8px;
+  text-align:center;
 }
 
 .back{
@@ -245,10 +263,12 @@ footer{
     and better manufacturability.
   </p>
 
-  <div class="media">
-    <img src="images/orpc-iterations.png" alt="ORPC different design iterations">
+  <div class="media media-medium">
+    <a href="images/orpc-iterations.png" target="_blank">
+      <img src="images/orpc-iterations.png" alt="ORPC different design iterations">
+    </a>
     <div class="caption">
-      Placeholder: different concept iterations / early CAD comparison.
+      Concept iterations and design evolution. Click image to view full resolution.
     </div>
   </div>
 </section>
@@ -272,10 +292,12 @@ footer{
       </ul>
     </div>
 
-    <div class="media">
-      <img src="images/orpc-full-cad.png" alt="ORPC full CAD model">
+    <div class="media media-large">
+      <a href="images/orpc-full-cad.png" target="_blank">
+        <img src="images/orpc-full-cad.png" alt="ORPC full CAD model">
+      </a>
       <div class="caption">
-        Placeholder: full CAD model of the final release mechanism.
+        Full CAD model of the final release mechanism. Click image to view full resolution.
       </div>
     </div>
   </div>
@@ -308,20 +330,23 @@ footer{
   </p>
 
   <div class="two-col">
-    <div class="media">
-      <img src="images/orpc-prototype.png" alt="ORPC prototype testing setup">
+    <div class="media media-small">
+      <a href="images/orpc-prototype.png" target="_blank">
+        <img src="images/orpc-prototype.png" alt="ORPC prototype testing setup">
+      </a>
       <div class="caption">
-        Placeholder: prototype or physical testing setup photo.
+        Physical prototype used for functional release testing. Click image to view full resolution.
       </div>
     </div>
 
-    <div class="media">
-      <video controls poster="images/orpc-video-thumbnail.png">
-        <source src="videos/orpc-testing-demo.mp4" type="video/mp4">
+    <div class="media media-video">
+      <video controls preload="metadata" poster="images/orpc-video-thumbnail.png">
+        <source src="images/orpc-testing-demo.mp4" type="video/mp4">
+        <source src="images/orpc-testing-demo.mov" type="video/quicktime">
         Your browser does not support the video tag.
       </video>
       <div class="caption">
-        Placeholder: testing demo video showing the release mechanism in action.
+        Testing demo video showing the release mechanism in action.
       </div>
     </div>
   </div>
