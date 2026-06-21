@@ -1,0 +1,355 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ORPC Secondary Buoy Release Mechanism – Zhengzhao (Ken) Li</title>
+
+<style>
+* { box-sizing: border-box }
+
+:root{
+  --ink:#1b1b1f;
+  --muted:#666;
+  --brand:#4b0082;
+  --brand-2:#6a0dad;
+  --glass:rgba(255,255,255,.78);
+  --shadow:0 12px 32px rgba(0,0,0,.14);
+  --radius:18px;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  font-family:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color:var(--ink);
+  line-height:1.65;
+  background:
+    radial-gradient(600px 600px at 15% 10%, rgba(106,13,173,.18), transparent 60%),
+    radial-gradient(500px 500px at 85% 20%, rgba(75,0,130,.15), transparent 65%),
+    radial-gradient(700px 700px at 50% 90%, rgba(180,120,255,.12), transparent 70%),
+    linear-gradient(180deg, #faf6ff 0%, #f7f7fb 60%, #f9f9fb 100%);
+  background-attachment:fixed;
+}
+
+a{
+  color:var(--brand);
+  text-decoration:none;
+  font-weight:700;
+}
+
+.hero{
+  color:#fff;
+  text-align:center;
+  padding:clamp(72px, 12vw, 130px) 20px 70px;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+}
+
+.hero h1{
+  margin:0;
+  font-size:clamp(30px,4.5vw,48px);
+  line-height:1.15;
+}
+
+.hero p{
+  max-width:760px;
+  margin:18px auto 0;
+  opacity:.95;
+  font-size:1.05rem;
+}
+
+.chip{
+  display:inline-flex;
+  margin-top:18px;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.28);
+}
+
+.wrap{
+  max-width:1050px;
+  margin:auto;
+  padding:34px 18px;
+}
+
+.card{
+  position:relative;
+  background:var(--glass);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:30px;
+  margin:38px 0;
+  backdrop-filter:blur(14px);
+}
+
+.card::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:18px;
+  bottom:18px;
+  width:4px;
+  border-radius:4px;
+  background:linear-gradient(180deg,var(--brand),transparent);
+  opacity:.75;
+}
+
+h2{
+  color:var(--brand);
+  margin-top:0;
+}
+
+h3{
+  margin-top:1.3rem;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:18px;
+}
+
+.stat{
+  background:#fff;
+  border-radius:14px;
+  padding:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+}
+
+.stat strong{
+  display:block;
+  color:var(--brand);
+  font-size:1.05rem;
+  margin-bottom:6px;
+}
+
+.media{
+  margin-top:18px;
+}
+
+.media img,
+.media video{
+  width:100%;
+  border-radius:16px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.caption{
+  color:var(--muted);
+  font-size:.92rem;
+  margin-top:8px;
+  text-align:center;
+}
+
+.two-col{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:22px;
+  align-items:start;
+}
+
+ul{
+  margin-left:1.25rem;
+}
+
+.back{
+  display:inline-flex;
+  margin:28px 0 4px;
+  padding:10px 16px;
+  border-radius:12px;
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:#fff;
+  box-shadow:var(--shadow);
+}
+
+footer{
+  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  color:#fff;
+  text-align:center;
+  padding:22px;
+}
+</style>
+</head>
+
+<body>
+
+<header class="hero">
+  <h1>ORPC Secondary Buoy Release Mechanism</h1>
+  <p>
+    Senior capstone project focused on designing a debris-tolerant mechanical release system
+    for ORPC's RivGen hydrokinetic turbine recovery buoy.
+  </p>
+  <div class="chip">UW Mechanical Engineering Capstone • Winter–Spring 2026</div>
+</header>
+
+<main class="wrap">
+
+<a class="back" href="index.html">← Back to Portfolio</a>
+
+<section class="card">
+  <h2>Project Overview</h2>
+  <p>
+    ORPC's RivGen system uses a secondary pop-up buoy to support localization and recovery
+    operations. The existing release approach can be affected by sediment, biofouling, debris,
+    and long-term underwater deployment. Our team designed a mechanically actuated release
+    mechanism intended to improve reliability while avoiding underwater battery power.
+  </p>
+
+  <div class="grid">
+    <div class="stat">
+      <strong>Client</strong>
+      Ocean Renewable Power Company / ORPC
+    </div>
+    <div class="stat">
+      <strong>Role</strong>
+      Mechanical design, CAD development, prototyping, testing, and documentation
+    </div>
+    <div class="stat">
+      <strong>Core Challenge</strong>
+      Reliable release after long-term riverbed deployment
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Problem Statement</h2>
+  <p>
+    The project addressed the need for a reliable secondary buoy actuation mechanism capable
+    of releasing a pneumatic umbilical recovery buoy after extended inactivity in a submerged,
+    sediment-rich river environment.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Design Requirements</h2>
+  <ul>
+    <li>Operate reliably after long-term underwater deployment.</li>
+    <li>Reduce risk of sediment, debris, and biofouling preventing release.</li>
+    <li>Use onboard power instead of an underwater battery system.</li>
+    <li>Minimize uncontrolled line payout and entanglement during buoy deployment.</li>
+    <li>Remain simple to inspect, reset, and maintain in field conditions.</li>
+    <li>Integrate with the existing RivGen recovery setup and SCADA signal architecture.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>Concept Development and Iterations</h2>
+  <p>
+    Multiple concepts were explored, including rotating cam, pelican hook, eccentric hook,
+    and burn-wire-based ideas. The final direction evolved toward a motor-driven rotary hook
+    mechanism because it offered a direct mechanical release path, fewer complex moving parts,
+    and better manufacturability.
+  </p>
+
+  <div class="media">
+    <img src="images/orpc-iterations.jpg" alt="ORPC different design iterations">
+    <div class="caption">
+      Placeholder: different concept iterations / early CAD comparison.
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Final Design</h2>
+  <div class="two-col">
+    <div>
+      <p>
+        The selected design uses a rotary hook connected to an underwater-rated servo through
+        a shaft and coupler. In the locked state, the hook retains the buoy line under tension.
+        When actuated, the hook rotates away from the retained line path, allowing the buoy
+        to release and surface for recovery.
+      </p>
+
+      <ul>
+        <li>Rotary hook release architecture</li>
+        <li>Servo-driven actuation</li>
+        <li>Shaft support with bushings/bearings</li>
+        <li>Modular mounting for integration with the existing buoy setup</li>
+      </ul>
+    </div>
+
+    <div class="media">
+      <img src="images/orpc-full-cad.jpg" alt="ORPC full CAD model">
+      <div class="caption">
+        Placeholder: full CAD model of the final release mechanism.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Manufacturing and Assembly Considerations</h2>
+  <p>
+    The design prioritized commercially available components where possible to reduce
+    machining cost, lead time, and assembly complexity. The CAD base plate was used as a
+    layout reference, while the final mechanism can be mounted directly to the existing buoy
+    structure.
+  </p>
+
+  <ul>
+    <li>Off-the-shelf components were preferred to reduce custom manufacturing.</li>
+    <li>Mounting holes can be located from the CAD layout after suppressing the temporary base plate.</li>
+    <li>The coupler shown in CAD represents the preferred final configuration.</li>
+    <li>UHMW bushing holes and bores may require minor reaming due to tolerance stack-up.</li>
+    <li>Corrosion-resistant fasteners, including titanium options, were considered for future deployment.</li>
+  </ul>
+</section>
+
+<section class="card">
+  <h2>Prototype and Testing</h2>
+  <p>
+    Testing focused on validating the release motion, checking whether the mechanism could
+    actuate under load, and evaluating how sediment or obstruction could affect reliability.
+    Flume testing and sediment testing were used to better understand real operating risks.
+  </p>
+
+  <div class="two-col">
+    <div class="media">
+      <img src="images/orpc-prototype.jpg" alt="ORPC prototype testing setup">
+      <div class="caption">
+        Placeholder: prototype or physical testing setup photo.
+      </div>
+    </div>
+
+    <div class="media">
+      <video controls poster="images/orpc-video-thumbnail.jpg">
+        <source src="videos/orpc-testing-demo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+      <div class="caption">
+        Placeholder: testing demo video showing the release mechanism in action.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Engineering Outcome</h2>
+  <p>
+    The final design demonstrated a practical direction for a simpler and more reliable
+    secondary recovery mechanism. By eliminating more complex underwater release methods
+    and focusing on a mechanically direct rotary hook, the design reduced potential failure
+    points while improving manufacturability, resetability, and serviceability.
+  </p>
+</section>
+
+<section class="card">
+  <h2>Key Takeaways</h2>
+  <ul>
+    <li>Reliable underwater mechanisms require simplicity, tolerance for contamination, and easy reset procedures.</li>
+    <li>Early physical prototyping helped reveal issues that were difficult to predict from CAD alone.</li>
+    <li>Designing around real client constraints required balancing performance, cost, manufacturability, and maintenance.</li>
+  </ul>
+</section>
+
+</main>
+
+<footer>© 2026 Zhengzhao (Ken) Li — ORPC Senior Capstone Project</footer>
+
+</body>
+</html>
+```
