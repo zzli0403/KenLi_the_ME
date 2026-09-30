@@ -4,195 +4,187 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ORPC Secondary Buoy Release Mechanism – Zhengzhao (Ken) Li</title>
+<meta name="description" content="Senior capstone: debris-tolerant mechanical release mechanism for ORPC's RivGen hydrokinetic turbine recovery buoy.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-* { box-sizing: border-box }
-
+/* ============ Base ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 :root{
-  --ink:#1b1b1f;
-  --muted:#666;
-  --brand:#4b0082;
-  --brand-2:#6a0dad;
-  --glass:rgba(255,255,255,.78);
-  --shadow:0 12px 32px rgba(0,0,0,.14);
-  --radius:18px;
+  --ink: #191922;
+  --muted: #5f5f6e;
+  --brand: #4b0082;
+  --brand-2: #6a0dad;
+  --brand-soft: rgba(106,13,173,.08);
+  --card: rgba(255,255,255,.82);
+  --shadow: 0 14px 40px rgba(43,10,84,.12);
+  --shadow-sm: 0 6px 18px rgba(43,10,84,.10);
+  --radius: 20px;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-head: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
 }
-
-html{scroll-behavior:smooth}
-
+html{ scroll-behavior: smooth; }
 body{
-  margin:0;
-  font-family:ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  color:var(--ink);
-  line-height:1.65;
+  font-family: var(--font-body);
+  color: var(--ink);
+  line-height: 1.7;
   background:
-    radial-gradient(600px 600px at 15% 10%, rgba(106,13,173,.18), transparent 60%),
-    radial-gradient(500px 500px at 85% 20%, rgba(75,0,130,.15), transparent 65%),
-    radial-gradient(700px 700px at 50% 90%, rgba(180,120,255,.12), transparent 70%),
-    linear-gradient(180deg, #faf6ff 0%, #f7f7fb 60%, #f9f9fb 100%);
-  background-attachment:fixed;
+    radial-gradient(700px 500px at 12% 6%, rgba(106,13,173,.16), transparent 60%),
+    radial-gradient(560px 460px at 88% 14%, rgba(75,0,130,.12), transparent 65%),
+    radial-gradient(760px 640px at 50% 96%, rgba(180,120,255,.10), transparent 70%),
+    linear-gradient(180deg, #faf5ff 0%, #f6f6fb 55%, #f8f8fb 100%);
+  background-attachment: fixed;
+  opacity: 0;
+  transition: opacity .5s ease;
+  -webkit-font-smoothing: antialiased;
 }
+body.page-in{ opacity: 1; }
+body.fade-leave{ opacity: 0; transition: opacity .3s ease; }
+a{ color: var(--brand); text-decoration: none; }
+img{ max-width: 100%; }
 
-a{
-  color:var(--brand);
-  text-decoration:none;
-  font-weight:700;
+/* ============ Nav ============ */
+.nav{
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,.72);
+  border-bottom: 1px solid rgba(75,0,130,.10);
 }
+.nav-inner{
+  max-width: 1080px; margin: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px;
+}
+.nav-logo{ font-family: var(--font-head); font-weight: 800; font-size: 1.05rem; color: var(--brand); }
+.back-link{
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600; font-size: .92rem; color: var(--ink);
+  padding: 8px 12px; border-radius: 10px;
+  transition: background .2s ease, color .2s ease;
+}
+.back-link:hover{ background: var(--brand-soft); color: var(--brand); }
 
+/* ============ Hero ============ */
 .hero{
-  color:#fff;
-  text-align:center;
-  padding:clamp(72px, 12vw, 130px) 20px 70px;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
+  position: relative; overflow: hidden;
+  color: #fff; text-align: center;
+  padding: clamp(64px, 11vw, 130px) 20px 60px;
+  background:
+    radial-gradient(600px 380px at 20% 20%, rgba(180,124,255,.35), transparent 60%),
+    radial-gradient(700px 420px at 82% 78%, rgba(120,40,220,.30), transparent 62%),
+    linear-gradient(135deg, #36015e 0%, var(--brand) 45%, var(--brand-2) 100%);
+}
+.hero::before{
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+}
+.hero > *{ position: relative; }
+.hero h1{ font-family: var(--font-head); font-weight: 800; font-size: clamp(28px, 4.4vw, 42px); letter-spacing: -.01em; line-height: 1.15; }
+.hero p{ max-width: 760px; margin: 16px auto 0; opacity: .93; font-size: 1.02rem; }
+.hero .chip{
+  display: inline-flex; gap: 8px; align-items: center;
+  padding: 8px 16px; margin-top: 18px; border-radius: 999px;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28);
+  font-size: .88rem; font-weight: 600;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
 
-.hero h1{
-  margin:0;
-  font-size:clamp(30px,4.5vw,48px);
-  line-height:1.15;
+/* ============ Layout / Cards ============ */
+.wrap{ max-width: 1050px; margin: auto; padding: 8px 20px 40px; }
+section.card{
+  scroll-margin-top: 84px;
+  background: var(--card);
+  border: 1px solid rgba(75,0,130,.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 4vw, 34px);
+  margin: 32px 0;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
 }
-
-.hero p{
-  max-width:760px;
-  margin:18px auto 0;
-  opacity:.95;
-  font-size:1.05rem;
+section.card.show{ opacity: 1; transform: translateY(0); }
+.kicker{
+  display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brand-2); background: var(--brand-soft);
+  padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
 }
+h2{ font-family: var(--font-head); font-size: clamp(1.3rem, 2.6vw, 1.6rem); color: var(--ink); margin-bottom: 1rem; letter-spacing: -.01em; }
+h2 .grad{ background: linear-gradient(120deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+p{ margin: .55rem 0; }
+ul.tight{ margin: .5rem 0 .9rem 1.25rem; }
+ul.tight li{ margin: .4rem 0; }
 
-.chip{
-  display:inline-flex;
-  margin-top:18px;
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(255,255,255,.2);
-  border:1px solid rgba(255,255,255,.28);
-}
-
-.wrap{
-  max-width:1050px;
-  margin:auto;
-  padding:34px 18px;
-}
-
-.card{
-  position:relative;
-  background:var(--glass);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:30px;
-  margin:38px 0;
-  backdrop-filter:blur(14px);
-}
-
-.card::before{
-  content:"";
-  position:absolute;
-  left:0;
-  top:18px;
-  bottom:18px;
-  width:4px;
-  border-radius:4px;
-  background:linear-gradient(180deg,var(--brand),transparent);
-  opacity:.75;
-}
-
-h2{
-  color:var(--brand);
-  margin-top:0;
-}
-
-h3{
-  margin-top:1.3rem;
-}
-
-ul{
-  margin-left:1.25rem;
-}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:18px;
-}
-
+/* ============ Stats / Grids ============ */
+.grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-top: 18px; }
 .stat{
-  background:#fff;
-  border-radius:14px;
-  padding:18px;
-  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  background: #fff; border: 1px solid rgba(75,0,130,.10);
+  border-radius: 16px; padding: 20px; box-shadow: var(--shadow-sm);
+  transition: transform .25s ease, box-shadow .25s ease;
 }
-
+.stat:hover{ transform: translateY(-3px); box-shadow: var(--shadow); }
 .stat strong{
-  display:block;
-  color:var(--brand);
-  font-size:1.05rem;
-  margin-bottom:6px;
+  display: block; font-family: var(--font-head);
+  color: var(--brand); font-size: .82rem; letter-spacing: .1em; text-transform: uppercase;
+  margin-bottom: 8px;
 }
-
 .two-col{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:22px;
-  align-items:start;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px; align-items: start;
 }
 
-.media{
-  margin-top:18px;
-  text-align:center;
+/* ============ Media ============ */
+.media{ margin-top: 20px; text-align: center; }
+.media img, .media video{
+  width: 100%; height: auto; border-radius: 16px; background: #fff;
+  box-shadow: var(--shadow); border: 1px solid rgba(75,0,130,.08);
+  transition: transform .3s ease, box-shadow .3s ease;
 }
+a .media img:hover, .media a img:hover{ transform: translateY(-3px) scale(1.015); }
+.media-small img{ max-width: 380px; }
+.media-medium img{ max-width: 540px; }
+.media-large img{ max-width: 680px; }
+.media-video video{ max-width: 760px; }
+.caption{ color: var(--muted); font-size: .88rem; font-style: italic; margin-top: 10px; }
 
-.media img,
-.media video{
-  width:100%;
-  height:auto;
-  border-radius:16px;
-  background:#fff;
-  box-shadow:var(--shadow);
+/* ============ Buttons / Footer ============ */
+.btn-row{ margin-top: 18px; }
+.btn-brand{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 14px; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 10px 24px rgba(75,0,130,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
 }
-
-.media-small img{
-  max-width:380px;
-}
-
-.media-medium img{
-  max-width:500px;
-}
-
-.media-large img{
-  max-width:650px;
-}
-
-.media-video video{
-  max-width:760px;
-}
-
-.caption{
-  color:var(--muted);
-  font-size:.92rem;
-  margin-top:8px;
-  text-align:center;
-}
-
-.back{
-  display:inline-flex;
-  margin:28px 0 4px;
-  padding:10px 16px;
-  border-radius:12px;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  color:#fff;
-  box-shadow:var(--shadow);
-}
-
+.btn-brand:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(75,0,130,.42); color: #fff; }
 footer{
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  color:#fff;
-  text-align:center;
-  padding:22px;
+  background: linear-gradient(135deg, #36015e, var(--brand) 60%, var(--brand-2));
+  color: rgba(255,255,255,.85); text-align: center; padding: 26px 20px; font-size: .9rem;
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+  section.card{ opacity: 1; transform: none; }
 }
 </style>
 </head>
 
 <body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Ken Li</a>
+    <a class="back-link" href="index.html">← Back to Portfolio</a>
+  </div>
+</nav>
 
 <header class="hero">
   <h1>ORPC Secondary Buoy Release Mechanism</h1>
@@ -205,175 +197,190 @@ footer{
 
 <main class="wrap">
 
-<a class="back" href="index.html">← Back to Portfolio</a>
-
-<section class="card">
-  <h2>Project Overview</h2>
-  <p>
-    ORPC's RivGen system uses a secondary pop-up buoy to support localization and recovery
-    operations. The existing release approach can be affected by sediment, biofouling, debris,
-    and long-term underwater deployment. Our team designed a mechanically actuated release
-    mechanism intended to improve reliability while avoiding underwater battery power.
-  </p>
-
-  <div class="grid">
-    <div class="stat">
-      <strong>Client</strong>
-      Ocean Renewable Power Company / ORPC
+  <section class="card">
+    <span class="kicker">Overview</span>
+    <h2>Project <span class="grad">Overview</span></h2>
+    <p>
+      ORPC's RivGen system uses a secondary pop-up buoy to support localization and recovery
+      operations. The existing release approach can be affected by sediment, biofouling, debris,
+      and long-term underwater deployment. Our team designed a mechanically actuated release
+      mechanism intended to improve reliability while avoiding underwater battery power.
+    </p>
+    <div class="grid">
+      <div class="stat">
+        <strong>Client</strong>
+        Ocean Renewable Power Company / ORPC
+      </div>
+      <div class="stat">
+        <strong>Role</strong>
+        Mechanical design, CAD development, prototyping, testing, and documentation
+      </div>
+      <div class="stat">
+        <strong>Core Challenge</strong>
+        Reliable release after long-term riverbed deployment
+      </div>
     </div>
-    <div class="stat">
-      <strong>Role</strong>
-      Mechanical design, CAD development, prototyping, testing, and documentation
-    </div>
-    <div class="stat">
-      <strong>Core Challenge</strong>
-      Reliable release after long-term riverbed deployment
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="card">
-  <h2>Problem Statement</h2>
-  <p>
-    The project addressed the need for a reliable secondary buoy actuation mechanism capable
-    of releasing a pneumatic umbilical recovery buoy after extended inactivity in a submerged,
-    sediment-rich river environment.
-  </p>
-</section>
+  <section class="card">
+    <span class="kicker">Problem</span>
+    <h2>Problem <span class="grad">Statement</span></h2>
+    <p>
+      The project addressed the need for a reliable secondary buoy actuation mechanism capable
+      of releasing a pneumatic umbilical recovery buoy after extended inactivity in a submerged,
+      sediment-rich river environment.
+    </p>
+  </section>
 
-<section class="card">
-  <h2>Design Requirements</h2>
-  <ul>
-    <li>Operate reliably after long-term underwater deployment.</li>
-    <li>Reduce risk of sediment, debris, and biofouling preventing release.</li>
-    <li>Use onboard power instead of an underwater battery system.</li>
-    <li>Minimize uncontrolled line payout and entanglement during buoy deployment.</li>
-    <li>Remain simple to inspect, reset, and maintain in field conditions.</li>
-    <li>Integrate with the existing RivGen recovery setup and SCADA signal architecture.</li>
-  </ul>
-</section>
+  <section class="card">
+    <span class="kicker">Requirements</span>
+    <h2>Design <span class="grad">Requirements</span></h2>
+    <ul class="tight">
+      <li>Operate reliably after long-term underwater deployment.</li>
+      <li>Reduce risk of sediment, debris, and biofouling preventing release.</li>
+      <li>Use onboard power instead of an underwater battery system.</li>
+      <li>Minimize uncontrolled line payout and entanglement during buoy deployment.</li>
+      <li>Remain simple to inspect, reset, and maintain in field conditions.</li>
+      <li>Integrate with the existing RivGen recovery setup and SCADA signal architecture.</li>
+    </ul>
+  </section>
 
-<section class="card">
-  <h2>Concept Development and Iterations</h2>
-  <p>
-    Multiple concepts were explored, including rotating cam, pelican hook, eccentric hook,
-    and burn-wire-based ideas. The final direction evolved toward a motor-driven rotary hook
-    mechanism because it offered a direct mechanical release path, fewer complex moving parts,
-    and better manufacturability.
-  </p>
-
-  <div class="media media-medium">
-    <a href="images/orpc-iterations.png" target="_blank">
-      <img src="images/orpc-iterations.png" alt="ORPC different design iterations">
-    </a>
-    <div class="caption">
-      Concept iterations and design evolution. Click image to view full resolution.
-    </div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>Final Design</h2>
-  <div class="two-col">
-    <div>
-      <p>
-        The selected design uses a rotary hook connected to an underwater-rated servo through
-        a shaft and coupler. In the locked state, the hook retains the buoy line under tension.
-        When actuated, the hook rotates away from the retained line path, allowing the buoy
-        to release and surface for recovery.
-      </p>
-
-      <ul>
-        <li>Rotary hook release architecture</li>
-        <li>Servo-driven actuation</li>
-        <li>Shaft support with bushings/bearings</li>
-        <li>Modular mounting for integration with the existing buoy setup</li>
-      </ul>
-    </div>
-
-    <div class="media media-large">
-      <a href="images/orpc-full-cad.png" target="_blank">
-        <img src="images/orpc-full-cad.png" alt="ORPC full CAD model">
+  <section class="card">
+    <span class="kicker">Ideation</span>
+    <h2>Concept Development &amp; <span class="grad">Iterations</span></h2>
+    <p>
+      Multiple concepts were explored, including rotating cam, pelican hook, eccentric hook,
+      and burn-wire-based ideas. The final direction evolved toward a motor-driven rotary hook
+      mechanism because it offered a direct mechanical release path, fewer complex moving parts,
+      and better manufacturability.
+    </p>
+    <div class="media media-medium">
+      <a href="images/orpc-iterations.png" target="_blank" rel="noopener">
+        <img src="images/orpc-iterations.png" alt="ORPC different design iterations">
       </a>
-      <div class="caption">
-        Full CAD model of the final release mechanism. Click image to view full resolution.
+      <div class="caption">Concept iterations and design evolution. Click image to view full resolution.</div>
+    </div>
+  </section>
+
+  <section class="card">
+    <span class="kicker">Design</span>
+    <h2>Final <span class="grad">Design</span></h2>
+    <div class="two-col">
+      <div>
+        <p>
+          The selected design uses a rotary hook connected to an underwater-rated servo through
+          a shaft and coupler. In the locked state, the hook retains the buoy line under tension.
+          When actuated, the hook rotates away from the retained line path, allowing the buoy
+          to release and surface for recovery.
+        </p>
+        <ul class="tight">
+          <li>Rotary hook release architecture</li>
+          <li>Servo-driven actuation</li>
+          <li>Shaft support with bushings/bearings</li>
+          <li>Modular mounting for integration with the existing buoy setup</li>
+        </ul>
+      </div>
+      <div class="media media-large">
+        <a href="images/orpc-full-cad.png" target="_blank" rel="noopener">
+          <img src="images/orpc-full-cad.png" alt="ORPC full CAD model">
+        </a>
+        <div class="caption">Full CAD model of the final release mechanism. Click image to view full resolution.</div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="card">
-  <h2>Manufacturing and Assembly Considerations</h2>
-  <p>
-    The design prioritized commercially available components where possible to reduce
-    machining cost, lead time, and assembly complexity. The CAD base plate was used as a
-    layout reference, while the final mechanism can be mounted directly to the existing buoy
-    structure.
-  </p>
+  <section class="card">
+    <span class="kicker">DFM</span>
+    <h2>Manufacturing &amp; <span class="grad">Assembly</span></h2>
+    <p>
+      The design prioritized commercially available components where possible to reduce
+      machining cost, lead time, and assembly complexity. The CAD base plate was used as a
+      layout reference, while the final mechanism can be mounted directly to the existing buoy
+      structure.
+    </p>
+    <ul class="tight">
+      <li>Off-the-shelf components were preferred to reduce custom manufacturing.</li>
+      <li>Mounting holes can be located from the CAD layout after suppressing the temporary base plate.</li>
+      <li>The coupler shown in CAD represents the preferred final configuration.</li>
+      <li>UHMW bushing holes and bores may require minor reaming due to tolerance stack-up.</li>
+      <li>Corrosion-resistant fasteners, including titanium options, were considered for future deployment.</li>
+    </ul>
+  </section>
 
-  <ul>
-    <li>Off-the-shelf components were preferred to reduce custom manufacturing.</li>
-    <li>Mounting holes can be located from the CAD layout after suppressing the temporary base plate.</li>
-    <li>The coupler shown in CAD represents the preferred final configuration.</li>
-    <li>UHMW bushing holes and bores may require minor reaming due to tolerance stack-up.</li>
-    <li>Corrosion-resistant fasteners, including titanium options, were considered for future deployment.</li>
-  </ul>
-</section>
-
-<section class="card">
-  <h2>Prototype and Testing</h2>
-  <p>
-    Testing focused on validating the release motion, checking whether the mechanism could
-    actuate under load, and evaluating how sediment or obstruction could affect reliability.
-    Flume testing and sediment testing were used to better understand real operating risks.
-  </p>
-
-  <div class="two-col">
-    <div class="media media-small">
-      <a href="images/orpc-prototype.png" target="_blank">
-        <img src="images/orpc-prototype.png" alt="ORPC prototype testing setup">
-      </a>
-      <div class="caption">
-        Physical prototype used for functional release testing. Click image to view full resolution.
+  <section class="card">
+    <span class="kicker">Validation</span>
+    <h2>Prototype &amp; <span class="grad">Testing</span></h2>
+    <p>
+      Testing focused on validating the release motion, checking whether the mechanism could
+      actuate under load, and evaluating how sediment or obstruction could affect reliability.
+      Flume testing and sediment testing were used to better understand real operating risks.
+    </p>
+    <div class="two-col">
+      <div class="media media-small">
+        <a href="images/orpc-prototype.png" target="_blank" rel="noopener">
+          <img src="images/orpc-prototype.png" alt="ORPC prototype testing setup">
+        </a>
+        <div class="caption">Physical prototype used for functional release testing. Click image to view full resolution.</div>
+      </div>
+      <div class="media media-video">
+        <video controls preload="metadata" poster="images/orpc-video-thumbnail.png">
+          <source src="images/orpc-testing-demo.mp4" type="video/mp4">
+          <source src="images/orpc-testing-demo.mov" type="video/quicktime">
+          Your browser does not support the video tag.
+        </video>
+        <div class="caption">Testing demo video showing the release mechanism in action.</div>
       </div>
     </div>
+  </section>
 
-    <div class="media media-video">
-      <video controls preload="metadata" poster="images/orpc-video-thumbnail.png">
-        <source src="images/orpc-testing-demo.mp4" type="video/mp4">
-        <source src="images/orpc-testing-demo.mov" type="video/quicktime">
-        Your browser does not support the video tag.
-      </video>
-      <div class="caption">
-        Testing demo video showing the release mechanism in action.
-      </div>
+  <section class="card">
+    <span class="kicker">Outcome</span>
+    <h2>Engineering <span class="grad">Outcome</span></h2>
+    <p>
+      The final design demonstrated a practical direction for a simpler and more reliable
+      secondary recovery mechanism. By eliminating more complex underwater release methods
+      and focusing on a mechanically direct rotary hook, the design reduced potential failure
+      points while improving manufacturability, resetability, and serviceability.
+    </p>
+  </section>
+
+  <section class="card">
+    <span class="kicker">Reflection</span>
+    <h2>Key <span class="grad">Takeaways</span></h2>
+    <ul class="tight">
+      <li>Reliable underwater mechanisms require simplicity, tolerance for contamination, and easy reset procedures.</li>
+      <li>Early physical prototyping helped reveal issues that were difficult to predict from CAD alone.</li>
+      <li>Designing around real client constraints required balancing performance, cost, manufacturability, and maintenance.</li>
+    </ul>
+    <div class="btn-row">
+      <a class="btn-brand" href="index.html">← Back to Portfolio</a>
     </div>
-  </div>
-</section>
-
-<section class="card">
-  <h2>Engineering Outcome</h2>
-  <p>
-    The final design demonstrated a practical direction for a simpler and more reliable
-    secondary recovery mechanism. By eliminating more complex underwater release methods
-    and focusing on a mechanically direct rotary hook, the design reduced potential failure
-    points while improving manufacturability, resetability, and serviceability.
-  </p>
-</section>
-
-<section class="card">
-  <h2>Key Takeaways</h2>
-  <ul>
-    <li>Reliable underwater mechanisms require simplicity, tolerance for contamination, and easy reset procedures.</li>
-    <li>Early physical prototyping helped reveal issues that were difficult to predict from CAD alone.</li>
-    <li>Designing around real client constraints required balancing performance, cost, manufacturability, and maintenance.</li>
-  </ul>
-</section>
+  </section>
 
 </main>
 
 <footer>© 2026 Zhengzhao (Ken) Li — ORPC Senior Capstone Project</footer>
 
+<script>
+  window.addEventListener('load', () => document.body.classList.add('page-in'));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('section.card').forEach(s => io.observe(s));
+
+  // Smooth page fade-out on internal navigation
+  document.querySelectorAll('a[href$=".html"]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const href = a.getAttribute('href');
+      document.body.classList.add('fade-leave');
+      setTimeout(() => { location.href = href; }, 280);
+    });
+  });
+</script>
+
 </body>
 </html>
-```
