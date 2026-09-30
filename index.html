@@ -4,222 +4,291 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Zhengzhao (Ken) Li – Mechanical Engineering Portfolio</title>
+<meta name="description" content="Portfolio of Zhengzhao (Ken) Li — Mechanical Engineer specializing in mechanical design, mechatronics, and project management." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ---------- Base ---------- */
-* { box-sizing: border-box }
+/* ============ Base ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 :root{
-  --ink:#1b1b1f;
-  --muted:#666;
-  --brand:#4b0082;
-  --brand-2:#6a0dad;
-  --glass: rgba(255,255,255,.75);
-  --shadow: 0 12px 32px rgba(0,0,0,.14);
-  --radius: 18px;
+  --ink: #191922;
+  --muted: #5f5f6e;
+  --brand: #4b0082;
+  --brand-2: #6a0dad;
+  --brand-soft: rgba(106,13,173,.08);
+  --accent: #b47cff;
+  --card: rgba(255,255,255,.82);
+  --shadow: 0 14px 40px rgba(43,10,84,.12);
+  --shadow-sm: 0 6px 18px rgba(43,10,84,.10);
+  --radius: 20px;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-head: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
 }
-
-html{scroll-behavior:smooth}
-
-/* ---------- Background Enhancement (Option C: Gradient Orbs) ---------- */
+html{ scroll-behavior: smooth; }
 body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  color:var(--ink);
-  line-height:1.65;
-
+  font-family: var(--font-body);
+  color: var(--ink);
+  line-height: 1.7;
   background:
-    radial-gradient(600px 600px at 15% 10%, rgba(106,13,173,.18), transparent 60%),
-    radial-gradient(500px 500px at 85% 20%, rgba(75,0,130,.15), transparent 65%),
-    radial-gradient(700px 700px at 50% 90%, rgba(180,120,255,.12), transparent 70%),
-    linear-gradient(180deg, #faf6ff 0%, #f7f7fb 60%, #f9f9fb 100%);
-
+    radial-gradient(700px 500px at 12% 6%, rgba(106,13,173,.16), transparent 60%),
+    radial-gradient(560px 460px at 88% 14%, rgba(75,0,130,.12), transparent 65%),
+    radial-gradient(760px 640px at 50% 96%, rgba(180,120,255,.10), transparent 70%),
+    linear-gradient(180deg, #faf5ff 0%, #f6f6fb 55%, #f8f8fb 100%);
   background-attachment: fixed;
-  opacity:0;
-  transition:opacity .5s ease;
+  opacity: 0;
+  transition: opacity .5s ease;
+  -webkit-font-smoothing: antialiased;
 }
+body.page-in{ opacity: 1; }
+a{ color: var(--brand); text-decoration: none; }
+img{ max-width: 100%; }
 
-body.page-in{opacity:1}
-a{color:var(--brand); text-decoration:none}
-
-/* ---------- Clickable Energy ---------- */
-.clickable{
-  position:relative;
-  font-weight:600;
-  transition:color .25s ease, transform .25s ease;
-}
-.clickable::after{
-  content:" →";
-  opacity:0;
-  transition:opacity .25s ease, transform .25s ease;
-  transform:translateX(-6px);
-}
-.clickable:hover{
-  color:var(--brand-2);
-  transform:translateY(-1px);
-}
-.clickable:hover::after{
-  opacity:1;
-  transform:translateX(0);
-}
-
-/* ---------- Hero ---------- */
-.hero{
-  color:#fff;
-  text-align:center;
-  padding: clamp(72px, 12vw, 140px) 20px 64px;
-  background: linear-gradient(135deg,var(--brand),var(--brand-2));
-}
-.hero h1{margin:0;font-size:clamp(28px,4vw,40px)}
-.hero p{margin:.25rem 0;opacity:.95}
-.hero .chip{
-  display:inline-flex;
-  gap:8px;
-  padding:8px 14px;
-  border-radius:999px;
-  background:rgba(255,255,255,.2);
-  border:1px solid rgba(255,255,255,.25);
-  margin-top:12px;
-}
-
-/* ---------- Nav ---------- */
+/* ============ Nav ============ */
 .nav{
-  position:sticky; top:0; z-index:20;
-  backdrop-filter: blur(10px);
-  background:rgba(255,255,255,.6);
-  border-bottom:1px solid rgba(0,0,0,.06);
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,.72);
+  border-bottom: 1px solid rgba(75,0,130,.10);
 }
 .nav-inner{
-  display:flex; gap:18px;
-  justify-content:center;
-  padding:10px 16px;
+  max-width: 1020px; margin: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px;
 }
-.nav a{
-  padding:8px 10px;
-  border-radius:10px;
-  font-weight:600;
+.nav-logo{ font-family: var(--font-head); font-weight: 800; font-size: 1.05rem; color: var(--brand); letter-spacing: .01em; }
+.nav-links{ display: flex; gap: 4px; flex-wrap: wrap; }
+.nav-links a{
+  padding: 8px 12px; border-radius: 10px; font-weight: 600; font-size: .92rem; color: var(--ink);
+  transition: background .2s ease, color .2s ease;
 }
-.nav a:hover{background:rgba(75,0,130,.08)}
+.nav-links a:hover{ background: var(--brand-soft); color: var(--brand); }
 
-/* ---------- Layout ---------- */
-.wrap{max-width:980px;margin:auto;padding:32px 18px}
-
-/* ---------- Section Card ---------- */
-section.card{
-  position:relative;
-  background:var(--glass);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:28px;
-  margin:44px 0;
-  backdrop-filter: blur(14px);
-
-  opacity:0;
-  transform:translateY(40px);
-  transition:opacity .9s ease, transform .9s ease;
+/* ============ Hero ============ */
+.hero{
+  position: relative; overflow: hidden;
+  color: #fff; text-align: center;
+  padding: clamp(84px, 13vw, 150px) 20px 72px;
+  background:
+    radial-gradient(600px 380px at 20% 20%, rgba(180,124,255,.35), transparent 60%),
+    radial-gradient(700px 420px at 82% 78%, rgba(120,40,220,.30), transparent 62%),
+    linear-gradient(135deg, #36015e 0%, var(--brand) 45%, var(--brand-2) 100%);
 }
-section.card::before{
-  content:"";
-  position:absolute;
-  left:0; top:18px; bottom:18px;
-  width:4px;
-  border-radius:4px;
-  background:linear-gradient(180deg,var(--brand),transparent);
-  opacity:.7;
+.hero::before{
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
 }
-section.card.show{
-  opacity:1;
-  transform:translateY(0);
+.hero > *{ position: relative; }
+.hero h1{ font-family: var(--font-head); font-weight: 800; font-size: clamp(30px, 4.6vw, 46px); letter-spacing: -.01em; }
+.hero .tagline{ margin: 10px 0 4px; font-size: clamp(1rem, 2vw, 1.15rem); opacity: .92; font-weight: 500; }
+.hero .chips{ display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 18px; }
+.chip{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 999px; font-size: .9rem; font-weight: 600;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
 }
-section.card.fade-out{
-  opacity:.25;
-  transform:translateY(-18px);
-}
-
-h2{color:var(--brand); margin-bottom:1rem}
-h3{margin-top:1.4rem}
-ul{margin-left:1.25rem}
-
-/* ---------- About ---------- */
-.about-flex{
-  display:flex;
-  gap:24px;
-  align-items:center;
-  flex-wrap:wrap;
-}
-.about-flex img{
-  width:220px;
-  height:220px;
-  border-radius:50%;
-  object-fit:cover;
-  box-shadow:var(--shadow);
-}
-
-/* ---------- Gallery ---------- */
-.gallery{
-  display:flex;
-  gap:16px;
-  margin-top:14px;
-  justify-content:center;
-  flex-wrap:wrap;
-}
-.gallery img{
-  width:100%;
-  max-width:260px;
-  height:160px;
-  object-fit:contain;
-  background:#fff;
-  border-radius:14px;
-  box-shadow:var(--shadow);
-  transition:transform .25s ease;
-}
-.gallery img:hover{transform:scale(1.04)}
-
-/* ---------- Button ---------- */
+.chip .dot{ width: 8px; height: 8px; border-radius: 50%; background: #7CFC9A; box-shadow: 0 0 8px #7CFC9A; }
+.hero .cta{ display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
 .btn{
-  display:inline-flex;
-  padding:10px 16px;
-  border-radius:12px;
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  color:#fff;
-  font-weight:700;
-  box-shadow:var(--shadow);
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 14px; font-weight: 700; font-size: .95rem;
+  background: #fff; color: var(--brand);
+  box-shadow: 0 10px 26px rgba(0,0,0,.22);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(0,0,0,.28); }
+.btn-ghost{
+  background: rgba(255,255,255,.12); color: #fff;
+  border: 1px solid rgba(255,255,255,.35); box-shadow: none;
+}
+.btn-ghost:hover{ background: rgba(255,255,255,.2); }
+
+/* ============ Layout / Cards ============ */
+.wrap{ max-width: 980px; margin: auto; padding: 8px 20px 40px; }
+section.card{
+  scroll-margin-top: 84px;
+  position: relative;
+  background: var(--card);
+  border: 1px solid rgba(75,0,130,.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 4vw, 36px);
+  margin: 40px 0;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  opacity: 0; transform: translateY(36px);
+  transition: opacity .8s ease, transform .8s ease;
+}
+section.card.show{ opacity: 1; transform: translateY(0); }
+.kicker{
+  display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brand-2); background: var(--brand-soft);
+  padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
+}
+h2{ font-family: var(--font-head); font-size: clamp(1.4rem, 3vw, 1.8rem); color: var(--ink); margin-bottom: 1.1rem; letter-spacing: -.01em; }
+h2 .grad{ background: linear-gradient(120deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+h3{ font-family: var(--font-head); font-size: 1.08rem; margin: 1.5rem 0 .4rem; }
+p{ margin: .55rem 0; }
+ul.tight{ margin: .5rem 0 .5rem 1.2rem; }
+ul.tight li{ margin: .35rem 0; }
+
+/* ============ About ============ */
+.about-flex{ display: flex; gap: 30px; align-items: center; flex-wrap: wrap; }
+.about-flex img{
+  width: 210px; height: 210px; border-radius: 50%; object-fit: cover; flex: none;
+  border: 4px solid #fff; outline: 2px solid rgba(106,13,173,.25);
+  box-shadow: var(--shadow);
+}
+.about-flex > div{ flex: 1 1 320px; }
+
+/* ============ Timeline (Journey) ============ */
+.timeline{ position: relative; padding-left: 30px; margin-top: 8px; }
+.timeline::before{
+  content: ""; position: absolute; left: 9px; top: 10px; bottom: 10px; width: 2px; border-radius: 2px;
+  background: linear-gradient(180deg, var(--brand-2), rgba(106,13,173,.15));
+}
+.t-item{ position: relative; padding-bottom: 26px; }
+.t-item:last-child{ padding-bottom: 4px; }
+.t-item::before{
+  content: ""; position: absolute; left: -27px; top: 7px;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #fff; border: 3px solid var(--brand-2);
+}
+.t-item.current::before{
+  background: var(--brand-2);
+  box-shadow: 0 0 0 6px rgba(106,13,173,.14);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{ 0%,100%{ box-shadow: 0 0 0 6px rgba(106,13,173,.14);} 50%{ box-shadow: 0 0 0 10px rgba(106,13,173,.06);} }
+.t-date{
+  font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.pill-now{
+  font-size: .72rem; letter-spacing: .06em; text-transform: uppercase;
+  background: linear-gradient(120deg, var(--brand), var(--brand-2)); color: #fff;
+  padding: 3px 10px; border-radius: 999px; font-weight: 700;
+}
+.t-item h3{ margin: .35rem 0 .3rem; }
+.t-item h3 .org{ color: var(--brand); }
+.t-role{ font-weight: 600; color: var(--ink); }
+
+/* ============ Certifications ============ */
+.cert-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 18px; margin-top: 6px; }
+.cert-card{
+  display: flex; gap: 16px; align-items: flex-start;
+  background: #fff; border: 1px solid rgba(75,0,130,.12); border-radius: 16px;
+  padding: 20px; box-shadow: var(--shadow-sm);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.cert-card:hover{ transform: translateY(-3px); box-shadow: var(--shadow); }
+.cert-icon{
+  flex: none; width: 52px; height: 52px; border-radius: 16px;
+  display: grid; place-items: center; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 8px 18px rgba(75,0,130,.28);
+}
+.cert-card h4{ font-family: var(--font-head); font-size: 1.02rem; margin: 0 0 4px; }
+.cert-card p{ margin: 0; font-size: .9rem; color: var(--muted); }
+
+/* ============ Projects ============ */
+.proj{ padding: 6px 0 14px; border-bottom: 1px dashed rgba(75,0,130,.14); }
+.proj:last-of-type{ border-bottom: none; }
+.clickable{ position: relative; font-weight: 700; transition: color .2s ease; }
+.clickable::after{ content: " →"; opacity: 0; transform: translateX(-6px); transition: opacity .2s ease, transform .2s ease; display: inline-block; }
+.clickable:hover{ color: var(--brand-2); }
+.clickable:hover::after{ opacity: 1; transform: translateX(0); }
+.gallery{ display: flex; gap: 16px; margin-top: 16px; justify-content: center; flex-wrap: wrap; }
+.gallery img{
+  width: 100%; max-width: 270px; height: 165px; object-fit: contain; background: #fff;
+  border-radius: 14px; box-shadow: var(--shadow-sm); border: 1px solid rgba(75,0,130,.08);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.gallery img:hover{ transform: scale(1.04); box-shadow: var(--shadow); }
+
+/* ============ Skills ============ */
+.skill-group{ margin-top: 14px; }
+.skill-group h4{ font-size: .85rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.pills{ display: flex; flex-wrap: wrap; gap: 8px; }
+.pill{
+  font-size: .88rem; font-weight: 600; padding: 6px 14px; border-radius: 999px;
+  background: var(--brand-soft); border: 1px solid rgba(106,13,173,.18); color: var(--brand);
+  transition: background .2s ease;
+}
+.pill:hover{ background: rgba(106,13,173,.16); }
+
+/* ============ Contact / Footer ============ */
+.contact-box{ text-align: center; padding: 8px 0; }
+.btn-brand{
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 14px;
+  padding: 13px 28px; border-radius: 14px; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 10px 24px rgba(75,0,130,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn-brand:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(75,0,130,.42); color: #fff; }
+footer{
+  background: linear-gradient(135deg, #36015e, var(--brand) 60%, var(--brand-2));
+  color: rgba(255,255,255,.85); text-align: center; padding: 26px 20px; font-size: .9rem;
 }
 
-/* ---------- Footer ---------- */
-footer{
-  background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  color:#fff;
-  text-align:center;
-  padding:22px;
+@media (max-width: 560px){
+  .nav-links a{ padding: 8px 8px; font-size: .85rem; }
+  .about-flex img{ width: 150px; height: 150px; }
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+  section.card{ opacity: 1; transform: none; }
 }
 </style>
 </head>
 
 <body>
 
-<header class="hero">
-  <h1>Zhengzhao (Ken) Li</h1>
-  <p>B.S. Mechanical Engineering</p>
-  <div class="chip">Seattle, WA • zzli0403@uw.edu</div>
-</header>
-
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#about">About</a>
-    <a href="#journey">Journey</a>
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
+    <a class="nav-logo" href="#top">Ken Li</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#journey">Journey</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
   </div>
 </nav>
 
+<header class="hero" id="top">
+  <h1>Zhengzhao (Ken) Li</h1>
+  <p class="tagline">Mechanical Engineer · Project Manager — where design meets delivery</p>
+  <div class="chips">
+    <span class="chip"><span class="dot"></span>Open to opportunities</span>
+    <span class="chip">Austin, TX</span>
+    <span class="chip">B.S. Mechanical Engineering · GPA 3.62</span>
+  </div>
+  <div class="cta">
+    <a class="btn" href="#projects">View Projects</a>
+    <a class="btn btn-ghost" href="mailto:zzli0403@uw.edu">Get in Touch</a>
+  </div>
+</header>
+
 <main class="wrap">
 
+<!-- ============ ABOUT ============ -->
 <section id="about" class="card">
   <div class="about-flex">
-    <img src="images/SELFIE.jpg" alt="portrait">
+    <img src="images/SELFIE.jpg" alt="Portrait of Zhengzhao (Ken) Li">
     <div>
-      <h2>About Me</h2>
+      <span class="kicker">About</span>
+      <h2>Mechanically driven, <span class="grad">delivery minded</span></h2>
       <p>
         I am a mechanically driven engineer with a strong interest in how physical systems are
         designed, built, and refined for real-world use. My curiosity started early with engines
@@ -228,117 +297,232 @@ footer{
       <p>
         I hold a B.S. in Mechanical Engineering (GPA 3.62) and enjoy design-build projects that
         integrate mechanical design, mechatronics, and system-level thinking, especially where
-        engineering decisions directly impact reliability and performance.
+        engineering decisions directly impact reliability and performance. As a project manager
+        in automation and manufacturing, I bridge the gap between CAD models and shipped hardware.
       </p>
     </div>
   </div>
 </section>
 
+<!-- ============ JOURNEY ============ -->
 <section id="journey" class="card">
-  <h2>Engineering Journey</h2>
+  <span class="kicker">Experience</span>
+  <h2>Engineering <span class="grad">Journey</span></h2>
 
-  <h3>VEX Robotics (2018–2022)</h3>
-  <ul>
-    <li>Co-Founder & Team Leader, Invincible Planck</li>
-    <li>Led mechanical design, prototyping, and competition preparation</li>
-    <li>Asia-Pacific & China Final awards</li>
-  </ul>
+  <div class="timeline">
 
-  <h3><a href="bosch.html" class="clickable">Bosch — XC-CT EHW Technician Internship</a></h3>
-  <p>
-    Supported high-reliability electronics testing through PCB rework, diagnostics,
-    and technical documentation in a production-critical environment.
-  </p>
+    <div class="t-item current">
+      <div class="t-date">Sep 2026 – Present · Austin, TX <span class="pill-now">Current</span></div>
+      <h3><span class="org">Belong Automotive Technology</span> — <span class="t-role">Project Manager</span></h3>
+      <ul class="tight">
+        <li>Assist in planning, coordinating, and executing automation and manufacturing projects</li>
+        <li>Support communication between clients, engineering teams, and vendors</li>
+        <li>Track project schedules, deliverables, and milestones</li>
+        <li>Participate in on-site project activities, including installation and commissioning support</li>
+        <li>Prepare project documentation, reports, and status updates</li>
+        <li>Identify and escalate risks, delays, or issues to senior team members</li>
+      </ul>
+    </div>
 
-  <h3>University of Washington — ME 123 Teaching Assistant</h3>
-  <p>
-    Supported undergraduate CAD instruction by helping students with SolidWorks modeling,
-    assemblies, engineering drawings, and design workflows. Provided office hours, technical
-    guidance, and project feedback to strengthen students' understanding of mechanical design.
-  </p>
+    <div class="t-item">
+      <div class="t-date">Internship</div>
+      <h3><a href="yanjan.html" class="clickable"><span class="org">Yanjan USA LLC</span> — <span class="t-role">Engineer Intern</span></a></h3>
+      <p>
+        Contributed to preventive maintenance, production documentation,
+        and manufacturing reliability improvement through cross-functional collaboration.
+      </p>
+    </div>
 
-  <h3><a href="yanjan.html" class="clickable">Yanjan USA LLC — Engineer Internship</a></h3>
-  <p>
-    Contributed to preventive maintenance, production documentation,
-    and manufacturing reliability improvement through cross-functional collaboration.
-  </p>
-</section>
+    <div class="t-item">
+      <div class="t-date">Internship</div>
+      <h3><a href="bosch.html" class="clickable"><span class="org">Bosch</span> — <span class="t-role">XC-CT EHW Technician Intern</span></a></h3>
+      <p>
+        Supported high-reliability electronics testing through PCB rework, diagnostics,
+        and technical documentation in a production-critical environment.
+      </p>
+    </div>
 
-<section id="projects" class="card">
-  <h2>Featured Projects</h2>
+    <div class="t-item">
+      <div class="t-date">Sep 2024 – Jun 2026 · Part-Time, On Campus</div>
+      <h3><span class="org">University of Washington</span> — <span class="t-role">ME 123 Teaching Assistant</span></h3>
+      <p>
+        Supported undergraduate CAD instruction by helping students with SolidWorks modeling,
+        assemblies, engineering drawings, and design workflows. Provided office hours, technical
+        guidance, and project feedback to strengthen students' understanding of mechanical design.
+      </p>
+    </div>
 
-  <h3><a href="orpc.html" class="clickable">ORPC Secondary Buoy Release Mechanism — Senior Capstone Project</a></h3>
-  <p>
-    Designed a debris-tolerant mechanical release mechanism for ORPC's RivGen hydrokinetic
-    turbine recovery system. The project focused on improving the reliability of a secondary
-    pop-up buoy deployment system for long-term underwater use without relying on underwater
-    electrical power.
-  </p>
+    <div class="t-item">
+      <div class="t-date">Jun 2024 – Jun 2026 · Part-Time, On Campus</div>
+      <h3><span class="org">Starbucks</span> — <span class="t-role">Student Barista</span></h3>
+      <ul class="tight">
+        <li>Delivered fast, consistent customer service in a high-volume campus store</li>
+        <li>Operated POS, handled cash and card transactions, and upheld food-safety standards</li>
+        <li>Built time management and teamwork skills balancing work with full-time engineering coursework</li>
+      </ul>
+    </div>
 
-  <h3><a href="candybowl.html" class="clickable">Reimagined Candy Bowl — ME 493</a></h3>
-  <p>
-    A magnet-powered mechanical candy dispenser designed to emphasize reliability,
-    simplicity, and engaging physical interaction for engineering outreach.
-  </p>
+    <div class="t-item">
+      <div class="t-date">2018 – 2022</div>
+      <h3><span class="org">VEX Robotics</span> — <span class="t-role">Co-Founder &amp; Team Leader, Invincible Planck</span></h3>
+      <ul class="tight">
+        <li>Led mechanical design, prototyping, and competition preparation</li>
+        <li>Asia-Pacific &amp; China Final awards</li>
+      </ul>
+    </div>
 
-  <h3><a href="scooter.html" class="clickable">Self-Balancing Remote-Controlled Scooter — ME 480</a></h3>
-  <p>
-    A two-wheel self-balancing scooter integrating IMU-based control,
-    remote actuation, and mechanical design to enable riderless operation.
-  </p>
-
-  <h3>F1 Car Assembly — ME 123 Final Project</h3>
-  <ul>
-    <li>Complete SolidWorks assembly created from reference data</li>
-    <li>Advanced mating, exploded views, and photorealistic rendering</li>
-    <li>Demonstrated design intent and motion understanding</li>
-  </ul>
-
-  <div class="gallery">
-    <img src="images/ME123 F1-1.png" alt="F1 CAD">
-    <img src="images/ME123 F1-3.JPG" alt="F1 Render">
-    <img src="images/ME123 F1-2.png" alt="F1 Side">
   </div>
 </section>
 
-<section id="skills" class="card">
-  <h2>Technical Skills</h2>
-  <ul>
-    <li><strong>CAD & Design:</strong> SolidWorks (CSWP), Fusion 360, assemblies, design intent</li>
-    <li><strong>Fabrication:</strong> 3D printing, laser cutting, basic machining, prototyping</li>
-    <li><strong>Programming:</strong> C/C++, Arduino, MATLAB, Python</li>
-    <li><strong>Mechatronics:</strong> Sensors, actuators, motor control, embedded integration</li>
-    <li><strong>Analysis:</strong> Statics, dynamics, system modeling, tolerance analysis</li>
-  </ul>
+<!-- ============ CERTIFICATIONS ============ -->
+<section id="certifications" class="card">
+  <span class="kicker">Credentials</span>
+  <h2><span class="grad">Certifications</span></h2>
+  <div class="cert-grid">
+    <div class="cert-card">
+      <div class="cert-icon" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4.5 4.5 0 0 0-6 6L3 18l3 3 5.7-5.7a4.5 4.5 0 0 0 6-6L14 13l-3-3 3.7-3.7z"/></svg>
+      </div>
+      <div>
+        <h4>CSWP — Certified SOLIDWORKS Professional</h4>
+        <p>Dassault Systèmes. Advanced credential in part modeling, assemblies, and drawings.</p>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.5 13 17 22l-5-3-5 3 1.5-9"/></svg>
+      </div>
+      <div>
+        <h4>CAPM — Certified Associate in Project Management</h4>
+        <p>Project Management Institute (PMI). Formal training in project lifecycle, scheduling, risk, and stakeholder management.</p>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-3.6 8-10V5l-8-3-8 3v7c0 6.4 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+      <div>
+        <h4>OSHA 30-Hour Certification</h4>
+        <p>Occupational Safety and Health Administration. 30-hour training in workplace safety standards and hazard recognition.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="card">
+  <span class="kicker">Selected Work</span>
+  <h2>Featured <span class="grad">Projects</span></h2>
+
+  <div class="proj">
+    <h3><a href="orpc.html" class="clickable">ORPC Secondary Buoy Release Mechanism — Senior Capstone</a></h3>
+    <p>
+      Designed a debris-tolerant mechanical release mechanism for ORPC's RivGen hydrokinetic
+      turbine recovery system. The project focused on improving the reliability of a secondary
+      pop-up buoy deployment system for long-term underwater use without relying on underwater
+      electrical power.
+    </p>
+  </div>
+
+  <div class="proj">
+    <h3><a href="candybowl.html" class="clickable">Reimagined Candy Bowl — ME 493</a></h3>
+    <p>
+      A magnet-powered mechanical candy dispenser designed to emphasize reliability,
+      simplicity, and engaging physical interaction for engineering outreach.
+    </p>
+  </div>
+
+  <div class="proj">
+    <h3><a href="scooter.html" class="clickable">Self-Balancing Remote-Controlled Scooter — ME 480</a></h3>
+    <p>
+      A two-wheel self-balancing scooter integrating IMU-based control,
+      remote actuation, and mechanical design to enable riderless operation.
+    </p>
+  </div>
+
+  <div class="proj">
+    <h3>F1 Car Assembly — ME 123 Final Project</h3>
+    <ul class="tight">
+      <li>Complete SolidWorks assembly created from reference data</li>
+      <li>Advanced mating, exploded views, and photorealistic rendering</li>
+      <li>Demonstrated design intent and motion understanding</li>
+    </ul>
+    <div class="gallery">
+      <img src="images/ME123 F1-1.png" alt="F1 CAD model">
+      <img src="images/ME123 F1-3.JPG" alt="F1 photorealistic render">
+      <img src="images/ME123 F1-2.png" alt="F1 side view">
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section id="skills" class="card">
+  <span class="kicker">Toolbox</span>
+  <h2>Technical <span class="grad">Skills</span></h2>
+
+  <div class="skill-group">
+    <h4>CAD &amp; Design</h4>
+    <div class="pills">
+      <span class="pill">SolidWorks (CSWP)</span><span class="pill">Fusion 360</span>
+      <span class="pill">Assemblies</span><span class="pill">Design Intent</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <h4>Fabrication</h4>
+    <div class="pills">
+      <span class="pill">3D Printing</span><span class="pill">Laser Cutting</span>
+      <span class="pill">Basic Machining</span><span class="pill">Prototyping</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <h4>Programming</h4>
+    <div class="pills">
+      <span class="pill">C / C++</span><span class="pill">Arduino</span>
+      <span class="pill">MATLAB</span><span class="pill">Python</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <h4>Mechatronics</h4>
+    <div class="pills">
+      <span class="pill">Sensors</span><span class="pill">Actuators</span>
+      <span class="pill">Motor Control</span><span class="pill">Embedded Integration</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <h4>Analysis &amp; Management</h4>
+    <div class="pills">
+      <span class="pill">Statics / Dynamics</span><span class="pill">System Modeling</span>
+      <span class="pill">Tolerance Analysis</span><span class="pill">Project Scheduling</span>
+      <span class="pill">Risk Management</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
 <section id="contact" class="card">
-  <h2>Contact</h2>
-  <p>If you'd like to collaborate or discuss engineering opportunities:</p>
-  <a class="btn" href="mailto:zzli0403@uw.edu">Email Me</a>
+  <div class="contact-box">
+    <span class="kicker">Contact</span>
+    <h2>Let's build something <span class="grad">real</span></h2>
+    <p>If you'd like to collaborate or discuss engineering opportunities:</p>
+    <a class="btn-brand" href="mailto:zzli0403@uw.edu">Email Me</a>
+  </div>
 </section>
 
 </main>
 
-<footer>© 2025 Zhengzhao (Ken) Li — All Rights Reserved</footer>
+<footer>© 2026 Zhengzhao (Ken) Li — All Rights Reserved</footer>
 
 <script>
-window.addEventListener('load',()=>document.body.classList.add('page-in'));
+window.addEventListener('load', () => document.body.classList.add('page-in'));
 
-const sections=document.querySelectorAll('section.card');
-const observer=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.target.classList.add('show');
-      e.target.classList.remove('fade-out');
-    } else {
-      e.target.classList.add('fade-out');
-    }
+const sections = document.querySelectorAll('section.card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('show');
   });
-},{threshold:0.35});
-sections.forEach(s=>observer.observe(s));
+}, { threshold: 0.12 });
+sections.forEach(s => observer.observe(s));
 </script>
 
 </body>
 </html>
-```
