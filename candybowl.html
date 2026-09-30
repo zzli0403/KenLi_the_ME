@@ -4,231 +4,313 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Reimagined Candy Bowl — ME 493 | Zhengzhao (Ken) Li</title>
+<meta name="description" content="Reimagined Candy Bowl — magnet-powered mechanical candy launcher for UW engineering outreach. ME 493 project.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-  *{box-sizing:border-box}
-  :root{
-    --ink:#1b1b1f;
-    --muted:#666;
-    --brand:#4b0082;
-    --brand-2:#6a0dad;
-    --glass:rgba(255,255,255,.65);
-    --shadow:0 10px 30px rgba(0,0,0,.15);
-    --radius:18px;
-  }
-  html{scroll-behavior:smooth}
-  body{
-    margin:0; color:var(--ink); line-height:1.65;
-    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-    background:
-      radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 30%, #f7f7fb 60%, #f9f9fb 100%) fixed;
-    opacity:0; transition:opacity .4s ease;
-  }
-  body.page-in{opacity:1}
+/* ============ Base ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --ink: #191922;
+  --muted: #5f5f6e;
+  --brand: #4b0082;
+  --brand-2: #6a0dad;
+  --brand-soft: rgba(106,13,173,.08);
+  --card: rgba(255,255,255,.82);
+  --shadow: 0 14px 40px rgba(43,10,84,.12);
+  --shadow-sm: 0 6px 18px rgba(43,10,84,.10);
+  --radius: 20px;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-head: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+html{ scroll-behavior: smooth; }
+body{
+  font-family: var(--font-body);
+  color: var(--ink);
+  line-height: 1.7;
+  background:
+    radial-gradient(700px 500px at 12% 6%, rgba(106,13,173,.16), transparent 60%),
+    radial-gradient(560px 460px at 88% 14%, rgba(75,0,130,.12), transparent 65%),
+    radial-gradient(760px 640px at 50% 96%, rgba(180,120,255,.10), transparent 70%),
+    linear-gradient(180deg, #faf5ff 0%, #f6f6fb 55%, #f8f8fb 100%);
+  background-attachment: fixed;
+  opacity: 0;
+  transition: opacity .5s ease;
+  -webkit-font-smoothing: antialiased;
+}
+body.page-in{ opacity: 1; }
+body.fade-leave{ opacity: 0; transition: opacity .3s ease; }
+a{ color: var(--brand); text-decoration: none; }
+img{ max-width: 100%; }
 
-  .hero{
-    padding:clamp(70px,12vw,140px) 20px 64px;
-    text-align:center; color:#fff;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  }
-  .hero h1{margin:0 0 .4rem; font-size:clamp(30px,4vw,44px)}
-  .hero p{margin:.2rem 0; opacity:.95}
-  .chip{
-    display:inline-flex; gap:10px; align-items:center;
-    padding:8px 14px; margin-top:14px;
-    border-radius:999px;
-    background:rgba(255,255,255,.18);
-    backdrop-filter:blur(6px);
-    border:1px solid rgba(255,255,255,.25);
-    font-weight:600;
-  }
+/* ============ Nav ============ */
+.nav{
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,.72);
+  border-bottom: 1px solid rgba(75,0,130,.10);
+}
+.nav-inner{
+  max-width: 1020px; margin: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px;
+}
+.nav-logo{ font-family: var(--font-head); font-weight: 800; font-size: 1.05rem; color: var(--brand); }
+.back-link{
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600; font-size: .92rem; color: var(--ink);
+  padding: 8px 12px; border-radius: 10px;
+  transition: background .2s ease, color .2s ease;
+}
+.back-link:hover{ background: var(--brand-soft); color: var(--brand); }
 
-  .wrap{max-width:980px; margin:auto; padding:36px 18px}
+/* ============ Hero ============ */
+.hero{
+  position: relative; overflow: hidden;
+  color: #fff; text-align: center;
+  padding: clamp(64px, 11vw, 130px) 20px 60px;
+  background:
+    radial-gradient(600px 380px at 20% 20%, rgba(180,124,255,.35), transparent 60%),
+    radial-gradient(700px 420px at 82% 78%, rgba(120,40,220,.30), transparent 62%),
+    linear-gradient(135deg, #36015e 0%, var(--brand) 45%, var(--brand-2) 100%);
+}
+.hero::before{
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+}
+.hero > *{ position: relative; }
+.hero h1{ font-family: var(--font-head); font-weight: 800; font-size: clamp(28px, 4.4vw, 42px); letter-spacing: -.01em; }
+.hero .subtitle{ margin: 10px 0 0; font-size: clamp(1rem, 2vw, 1.12rem); opacity: .92; font-weight: 500; }
+.hero .chip{
+  display: inline-flex; gap: 8px; align-items: center;
+  padding: 8px 16px; margin-top: 16px; border-radius: 999px;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28);
+  font-size: .88rem; font-weight: 600;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
 
-  .back{
-    display:inline-flex;
-    margin:28px 0 4px;
-    padding:10px 16px;
-    border-radius:12px;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    color:#fff;
-    box-shadow:var(--shadow);
-    font-weight:700;
-    text-decoration:none;
-  }
+/* ============ Layout / Cards ============ */
+.wrap{ max-width: 980px; margin: auto; padding: 8px 20px 40px; }
+section.card{
+  scroll-margin-top: 84px;
+  background: var(--card);
+  border: 1px solid rgba(75,0,130,.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 4vw, 34px);
+  margin: 32px 0;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+section.card.show{ opacity: 1; transform: translateY(0); }
+.kicker{
+  display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brand-2); background: var(--brand-soft);
+  padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
+}
+h2{ font-family: var(--font-head); font-size: clamp(1.3rem, 2.6vw, 1.6rem); color: var(--ink); margin-bottom: 1rem; letter-spacing: -.01em; }
+h2 .grad{ background: linear-gradient(120deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+p{ margin: .55rem 0; }
+ul.tight{ margin: .5rem 0 .9rem 1.25rem; }
+ul.tight li{ margin: .4rem 0; }
+ul.tight li strong{ color: var(--brand); }
 
-  section.card{
-    background:var(--glass);
-    border:1px solid rgba(0,0,0,.06);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    padding:26px clamp(18px,3vw,30px);
-    margin:30px 0;
-    backdrop-filter:blur(14px);
-    opacity:0; transform:translateY(28px);
-    transition:opacity .8s ease, transform .8s ease;
-  }
-  section.card.show{opacity:1; transform:translateY(0)}
-  h2{color:var(--brand); margin:.1rem 0 1rem}
-  ul{margin:.4rem 0 .9rem 1.25rem}
+/* ============ Media ============ */
+.media-70{
+  width: 70%; max-width: 720px; display: block; margin: 20px auto;
+  border-radius: 16px; box-shadow: var(--shadow);
+  border: 1px solid rgba(75,0,130,.08); background: #fff;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+img.media-70:hover{ transform: translateY(-3px) scale(1.015); }
+.caption{ font-style: italic; color: var(--muted); text-align: center; margin: -8px 0 14px; font-size: .9rem; }
 
-  img.media-70{
-    width:70%;
-    max-width:720px;
-    display:block;
-    margin:18px auto;
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    background:#fff;
-  }
+/* ============ Buttons / Footer ============ */
+.btn-row{ margin-top: 18px; }
+.btn-brand{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 14px; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 10px 24px rgba(75,0,130,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn-brand:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(75,0,130,.42); color: #fff; }
+footer{
+  background: linear-gradient(135deg, #36015e, var(--brand) 60%, var(--brand-2));
+  color: rgba(255,255,255,.85); text-align: center; padding: 26px 20px; font-size: .9rem;
+}
 
-  video.media-70{
-    width:70%;
-    max-width:720px;
-    display:block;
-    margin:18px auto;
-    border-radius:14px;
-    box-shadow:var(--shadow);
-  }
-
-  footer{
-    color:#fff;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    text-align:center;
-    padding:22px;
-    margin-top:60px;
-  }
+@media (max-width: 600px){
+  .media-70{ width: 94%; }
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+  section.card{ opacity: 1; transform: none; }
+}
 </style>
 </head>
 
 <body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Ken Li</a>
+    <a class="back-link" href="index.html">← Back to Portfolio</a>
+  </div>
+</nav>
+
 <header class="hero">
   <h1>Reimagined Candy Bowl</h1>
-  <p>Magnet-Powered Mechanical Candy Launcher for Engineering Outreach</p>
-  <div class="chip">
-    <span>ME 493</span> • <span>Completed Project</span>
-  </div>
+  <p class="subtitle">Magnet-Powered Mechanical Candy Launcher for Engineering Outreach</p>
+  <div class="chip"><span>ME 493</span> • <span>Completed Project</span></div>
 </header>
 
 <main class="wrap">
 
-<a class="back" href="index.html">← Back to Portfolio</a>
+  <section class="card">
+    <span class="kicker">Background</span>
+    <h2>Project Overview &amp; <span class="grad">Client Need</span></h2>
+    <p>
+      This project was developed for Eli Patten, the UW Engineering Outreach Manager, to enhance
+      student engagement during outreach events. The objective was to create a portable, visually
+      engaging candy dispenser that demonstrates core mechanical engineering principles in an
+      intuitive and memorable way.
+    </p>
+    <p>
+      By combining playful interaction with a visible mechanical energy transfer mechanism, the
+      Candy Bowl aims to spark curiosity and positive association with UW Engineering among
+      high-school students.
+    </p>
+  </section>
 
-<section class="card">
-  <h2>Project Overview & Client Need</h2>
-  <p>
-    This project was developed for Eli Patten, the UW Engineering Outreach Manager, to enhance
-    student engagement during outreach events. The objective was to create a portable, visually
-    engaging candy dispenser that demonstrates core mechanical engineering principles in an
-    intuitive and memorable way.
-  </p>
-  <p>
-    By combining playful interaction with a visible mechanical energy transfer mechanism, the
-    Candy Bowl aims to spark curiosity and positive association with UW Engineering among
-    high-school students.
-  </p>
-</section>
+  <section class="card">
+    <span class="kicker">Context</span>
+    <h2>Problem <span class="grad">Context</span></h2>
+    <ul class="tight">
+      <li>Outreach activities require portable, robust, and intuitive devices</li>
+      <li>Systems must survive frequent handling and transport</li>
+      <li>Engagement depends on both reliability and visual intrigue</li>
+      <li>Engineering concepts should be observable without explanation</li>
+    </ul>
+  </section>
 
-<section class="card">
-  <h2>Problem Context</h2>
-  <ul>
-    <li>Outreach activities require portable, robust, and intuitive devices</li>
-    <li>Systems must survive frequent handling and transport</li>
-    <li>Engagement depends on both reliability and visual intrigue</li>
-    <li>Engineering concepts should be observable without explanation</li>
-  </ul>
-</section>
+  <section class="card">
+    <span class="kicker">Requirements</span>
+    <h2>Client Requirements &amp; <span class="grad">Engineering Specs</span></h2>
+    <ul class="tight">
+      <li>Fits within <strong>15 × 11 × 11 in</strong> and weighs under <strong>20 lb</strong></li>
+      <li>Survives a <strong>3 ft drop</strong> onto a hard surface</li>
+      <li>Dispenses one candy within <strong>2 seconds</strong> of activation</li>
+      <li>Achieves <strong>&gt;90% dispense success rate</strong></li>
+      <li>Easy to reload and intuitive for first-time users</li>
+      <li>UW-themed aesthetics and high engagement factor</li>
+      <li>Uses a common mechanical principle in an uncommon way</li>
+    </ul>
+  </section>
 
-<section class="card">
-  <h2>Client Requirements & Engineering Specifications</h2>
-  <ul>
-    <li>Fits within 15 × 11 × 11 in and weighs under 20 lb</li>
-    <li>Survives a 3 ft drop onto a hard surface</li>
-    <li>Dispenses one candy within 2 seconds of activation</li>
-    <li>Achieves &gt;90% dispense success rate</li>
-    <li>Easy to reload and intuitive for first-time users</li>
-    <li>UW-themed aesthetics and high engagement factor</li>
-    <li>Uses a common mechanical principle in an uncommon way</li>
-  </ul>
-</section>
+  <section class="card">
+    <span class="kicker">Design</span>
+    <h2>Design Concept &amp; <span class="grad">System Architecture</span></h2>
+    <p>
+      The Candy Bowl uses the repelling force between two opposing magnets to store and release
+      mechanical energy. When the user presses a button, a latch mechanism releases the carriage,
+      converting magnetic potential energy into a short, controlled impulse that launches a single
+      Starburst candy.
+    </p>
+    <ul class="tight">
+      <li>Purely mechanical launcher — no motors or electronics</li>
+      <li>Spring-loaded push button with compliant latch system</li>
+      <li>Single-track "banana" style magazine to prevent jamming</li>
+      <li>Modular construction using 3D-printed parts and aluminum rails</li>
+    </ul>
+  </section>
 
-<section class="card">
-  <h2>Design Concept & System Architecture</h2>
-  <p>
-    The Candy Bowl uses the repelling force between two opposing magnets to store and release
-    mechanical energy. When the user presses a button, a latch mechanism releases the carriage,
-    converting magnetic potential energy into a short, controlled impulse that launches a single
-    Starburst candy.
-  </p>
-  <ul>
-    <li>Purely mechanical launcher — no motors or electronics</li>
-    <li>Spring-loaded push button with compliant latch system</li>
-    <li>Single-track “banana” style magazine to prevent jamming</li>
-    <li>Modular construction using 3D-printed parts and aluminum rails</li>
-  </ul>
-</section>
+  <section class="card">
+    <span class="kicker">Testing</span>
+    <h2>Design Iteration &amp; <span class="grad">Testing</span></h2>
+    <p>
+      Multiple prototype iterations were developed to address reliability and usability challenges.
+      Early designs experienced candy jamming due to pressure from stacked candies. This was resolved
+      by transitioning from a multi-slot magazine to a single-track geometry.
+    </p>
+    <ul class="tight">
+      <li>Over <strong>seven latch and trigger iterations</strong> tested</li>
+      <li>Jamming mitigated through geometry and tolerance refinement</li>
+      <li>Drop testing and repeated actuation validated robustness</li>
+    </ul>
+  </section>
 
-<section class="card">
-  <h2>Design Iteration & Testing</h2>
-  <p>
-    Multiple prototype iterations were developed to address reliability and usability challenges.
-    Early designs experienced candy jamming due to pressure from stacked candies. This was resolved
-    by transitioning from a multi-slot magazine to a single-track geometry.
-  </p>
-  <ul>
-    <li>Over seven latch and trigger iterations tested</li>
-    <li>Jamming mitigated through geometry and tolerance refinement</li>
-    <li>Drop testing and repeated actuation validated robustness</li>
-  </ul>
-</section>
+  <section class="card">
+    <span class="kicker">Build</span>
+    <h2>Final <span class="grad">Assembly</span></h2>
+    <img src="images/assembly.png" alt="Candy Bowl CAD assembly" class="media-70">
+  </section>
 
-<section class="card">
-  <h2>Final Assembly</h2>
-  <img src="images/assembly.png"
-       alt="Candy Bowl CAD assembly"
-       class="media-70">
-</section>
+  <section class="card">
+    <span class="kicker">Demo</span>
+    <h2><span class="grad">Demonstration</span></h2>
+    <p>
+      The following video shows a typical user interaction, including button actuation and candy
+      launch behavior during outreach use.
+    </p>
+    <video controls class="media-70">
+      <source src="images/demo_candybowl.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </section>
 
-<section class="card">
-  <h2>Demonstration</h2>
-  <p>
-    The following video shows a typical user interaction, including button actuation and candy
-    launch behavior during outreach use.
-  </p>
-  <video controls class="media-70">
-    <source src="images/demo_candybowl.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</section>
-
-<section class="card">
-  <h2>Results, Limitations & Value Delivered</h2>
-  <ul>
-    <li>Meets approximately 88% of key design criteria</li>
-    <li>Successfully demonstrates magnets, linkages, and latch mechanisms</li>
-    <li>Provides an engaging, hands-on engineering experience</li>
-    <li>Remaining limitations include launch force consistency and intuitive operation</li>
-  </ul>
-  <p>
-    Overall, the Candy Bowl delivers strong educational value by combining playful interaction
-    with visible mechanical principles. The design establishes a solid foundation for future
-    refinement while already serving its outreach purpose effectively.
-  </p>
-</section>
+  <section class="card">
+    <span class="kicker">Outcome</span>
+    <h2>Results, Limitations &amp; <span class="grad">Value Delivered</span></h2>
+    <ul class="tight">
+      <li>Meets approximately <strong>88% of key design criteria</strong></li>
+      <li>Successfully demonstrates magnets, linkages, and latch mechanisms</li>
+      <li>Provides an engaging, hands-on engineering experience</li>
+      <li>Remaining limitations include launch force consistency and intuitive operation</li>
+    </ul>
+    <p>
+      Overall, the Candy Bowl delivers strong educational value by combining playful interaction
+      with visible mechanical principles. The design establishes a solid foundation for future
+      refinement while already serving its outreach purpose effectively.
+    </p>
+    <div class="btn-row">
+      <a class="btn-brand" href="index.html">← Back to Portfolio</a>
+    </div>
+  </section>
 
 </main>
 
-<footer>
-  © 2025 Zhengzhao (Ken) Li — ME 493 Project
-</footer>
+<footer>© 2026 Zhengzhao (Ken) Li — ME 493 Project</footer>
 
 <script>
-  window.addEventListener('load',()=>document.body.classList.add('page-in'));
-  const io=new IntersectionObserver((e)=>e.forEach(x=>{
-    if(x.isIntersecting){x.target.classList.add('show');io.unobserve(x.target)}
-  }),{threshold:.15});
-  document.querySelectorAll('section.card').forEach(s=>io.observe(s));
+  window.addEventListener('load', () => document.body.classList.add('page-in'));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('section.card').forEach(s => io.observe(s));
+
+  // Smooth page fade-out on internal navigation
+  document.querySelectorAll('a[href$=".html"]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const href = a.getAttribute('href');
+      document.body.classList.add('fade-leave');
+      setTimeout(() => { location.href = href; }, 280);
+    });
+  });
 </script>
+
 </body>
 </html>
-```
