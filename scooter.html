@@ -4,259 +4,341 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Self-Balancing Remote-Controlled Scooter — ME 480 | Zhengzhao (Ken) Li</title>
+<meta name="description" content="ME 480: riderless self-balancing electric scooter with IMU-based control and remote actuation of steering, throttle, braking, and kickstand.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 
 <style>
-  *{box-sizing:border-box}
-  :root{
-    --ink:#1b1b1f;
-    --muted:#666;
-    --brand:#4b0082;
-    --brand-2:#6a0dad;
-    --glass:rgba(255,255,255,.65);
-    --shadow:0 10px 30px rgba(0,0,0,.15);
-    --radius:18px;
-  }
-  html{scroll-behavior:smooth}
-  body{
-    margin:0; color:var(--ink); line-height:1.65;
-    font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
-    background:
-      radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 30%, #f7f7fb 60%, #f9f9fb 100%) fixed;
-    opacity:0; transition:opacity .4s ease;
-  }
-  body.page-in{opacity:1}
-  a{color:var(--brand); text-decoration:none}
+/* ============ Base ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --ink: #191922;
+  --muted: #5f5f6e;
+  --brand: #4b0082;
+  --brand-2: #6a0dad;
+  --brand-soft: rgba(106,13,173,.08);
+  --card: rgba(255,255,255,.82);
+  --shadow: 0 14px 40px rgba(43,10,84,.12);
+  --shadow-sm: 0 6px 18px rgba(43,10,84,.10);
+  --radius: 20px;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-head: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+html{ scroll-behavior: smooth; }
+body{
+  font-family: var(--font-body);
+  color: var(--ink);
+  line-height: 1.7;
+  background:
+    radial-gradient(700px 500px at 12% 6%, rgba(106,13,173,.16), transparent 60%),
+    radial-gradient(560px 460px at 88% 14%, rgba(75,0,130,.12), transparent 65%),
+    radial-gradient(760px 640px at 50% 96%, rgba(180,120,255,.10), transparent 70%),
+    linear-gradient(180deg, #faf5ff 0%, #f6f6fb 55%, #f8f8fb 100%);
+  background-attachment: fixed;
+  opacity: 0;
+  transition: opacity .5s ease;
+  -webkit-font-smoothing: antialiased;
+}
+body.page-in{ opacity: 1; }
+body.fade-leave{ opacity: 0; transition: opacity .3s ease; }
+a{ color: var(--brand); text-decoration: none; }
+img{ max-width: 100%; }
 
-  .hero{
-    padding:clamp(70px,12vw,140px) 20px 64px;
-    text-align:center; color:#fff;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-  }
-  .hero h1{margin:0 0 .4rem; font-size:clamp(30px,4vw,44px)}
-  .hero p{margin:.2rem 0; opacity:.95}
-  .chip{
-    display:inline-flex; gap:10px; align-items:center;
-    padding:8px 14px; margin-top:14px;
-    border-radius:999px;
-    background:rgba(255,255,255,.18);
-    backdrop-filter:blur(6px);
-    border:1px solid rgba(255,255,255,.25);
-    font-weight:600;
-  }
+/* ============ Nav ============ */
+.nav{
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,.72);
+  border-bottom: 1px solid rgba(75,0,130,.10);
+}
+.nav-inner{
+  max-width: 1020px; margin: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px;
+}
+.nav-logo{ font-family: var(--font-head); font-weight: 800; font-size: 1.05rem; color: var(--brand); }
+.back-link{
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600; font-size: .92rem; color: var(--ink);
+  padding: 8px 12px; border-radius: 10px;
+  transition: background .2s ease, color .2s ease;
+}
+.back-link:hover{ background: var(--brand-soft); color: var(--brand); }
 
-  .wrap{max-width:980px; margin:auto; padding:36px 18px}
+/* ============ Hero ============ */
+.hero{
+  position: relative; overflow: hidden;
+  color: #fff; text-align: center;
+  padding: clamp(64px, 11vw, 130px) 20px 60px;
+  background:
+    radial-gradient(600px 380px at 20% 20%, rgba(180,124,255,.35), transparent 60%),
+    radial-gradient(700px 420px at 82% 78%, rgba(120,40,220,.30), transparent 62%),
+    linear-gradient(135deg, #36015e 0%, var(--brand) 45%, var(--brand-2) 100%);
+}
+.hero::before{
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+}
+.hero > *{ position: relative; }
+.hero h1{ font-family: var(--font-head); font-weight: 800; font-size: clamp(26px, 4.2vw, 40px); letter-spacing: -.01em; line-height: 1.15; }
+.hero .subtitle{ margin: 10px 0 0; font-size: clamp(1rem, 2vw, 1.12rem); opacity: .92; font-weight: 500; }
+.hero .chip{
+  display: inline-flex; gap: 8px; align-items: center;
+  padding: 8px 16px; margin-top: 16px; border-radius: 999px;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28);
+  font-size: .88rem; font-weight: 600;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
 
-  .back{
-    display:inline-flex;
-    margin:28px 0 4px;
-    padding:10px 16px;
-    border-radius:12px;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    color:#fff;
-    box-shadow:var(--shadow);
-    font-weight:700;
-    text-decoration:none;
-  }
+/* ============ Layout / Cards ============ */
+.wrap{ max-width: 980px; margin: auto; padding: 8px 20px 40px; }
+section.card{
+  scroll-margin-top: 84px;
+  background: var(--card);
+  border: 1px solid rgba(75,0,130,.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 4vw, 34px);
+  margin: 32px 0;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+section.card.show{ opacity: 1; transform: translateY(0); }
+.kicker{
+  display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brand-2); background: var(--brand-soft);
+  padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
+}
+h2{ font-family: var(--font-head); font-size: clamp(1.3rem, 2.6vw, 1.6rem); color: var(--ink); margin-bottom: 1rem; letter-spacing: -.01em; }
+h2 .grad{ background: linear-gradient(120deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+h3{ font-family: var(--font-head); font-size: 1.08rem; margin: 1.4rem 0 .4rem; color: var(--ink); }
+p{ margin: .55rem 0; }
+ul.tight{ margin: .5rem 0 .9rem 1.25rem; }
+ul.tight li{ margin: .4rem 0; }
 
-  section.card{
-    background:var(--glass);
-    border:1px solid rgba(0,0,0,.06);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    padding:26px clamp(18px,3vw,30px);
-    margin:30px 0;
-    backdrop-filter:blur(14px);
-    opacity:0; transform:translateY(28px);
-    transition:opacity .8s ease, transform .8s ease;
-  }
-  section.card.show{opacity:1; transform:translateY(0)}
-  h2{color:var(--brand); margin:.1rem 0 1rem}
-  h3{margin:1.2rem 0 .4rem}
-  ul{margin:.4rem 0 .9rem 1.25rem}
+/* ============ Media ============ */
+.media{ margin: 18px auto 6px; text-align: center; }
+.media img, .media video{
+  border-radius: 16px; background: #fff;
+  box-shadow: var(--shadow); border: 1px solid rgba(75,0,130,.08);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.media img:hover{ transform: translateY(-3px) scale(1.015); }
+.media-50 img{ width: 50%; max-width: 420px; }
+.media-70 img, .media-70 video{ width: 70%; max-width: 720px; }
+.caption{ color: var(--muted); font-size: .88rem; font-style: italic; margin-top: 10px; }
+.subsystem{ padding: 4px 0 10px; border-bottom: 1px dashed rgba(75,0,130,.14); }
+.subsystem:last-child{ border-bottom: none; padding-bottom: 0; }
 
-  .gallery{
-    display:flex; flex-wrap:wrap;
-    gap:14px; justify-content:center;
-    margin-top:14px;
-  }
-  .gallery img{
-    max-width:320px;
-    width:100%;
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    background:#fff;
-  }
+/* ============ Buttons / Footer ============ */
+.btn-row{ margin-top: 18px; }
+.btn-brand{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 14px; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 10px 24px rgba(75,0,130,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn-brand:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(75,0,130,.42); color: #fff; }
+footer{
+  background: linear-gradient(135deg, #36015e, var(--brand) 60%, var(--brand-2));
+  color: rgba(255,255,255,.85); text-align: center; padding: 26px 20px; font-size: .9rem;
+}
 
-  video{
-    width:100%;
-    max-width:760px;
-    border-radius:14px;
-    box-shadow:var(--shadow);
-    display:block;
-    margin:18px auto 0;
-  }
-
-  footer{
-    color:#fff;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    text-align:center;
-    padding:22px;
-    margin-top:60px;
-  }
-
-  .media-70 {
-    width: 70%;
-    max-width: 720px;
-    margin: 18px auto;
-    display: block;
-  }
-  
-  .media-50 {
-    width: 50%;
-    max-width: 420px;
-    margin: 18px auto;
-    display: block;
-  }
+@media (max-width: 600px){
+  .media-50 img{ width: 82%; }
+  .media-70 img, .media-70 video{ width: 94%; }
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+  section.card{ opacity: 1; transform: none; }
+}
 </style>
 </head>
 
 <body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Ken Li</a>
+    <a class="back-link" href="index.html">← Back to Portfolio</a>
+  </div>
+</nav>
+
 <header class="hero">
   <h1>Self-Balancing Remote-Controlled Scooter</h1>
-  <p>Riderless Balance, Remote Actuation, and Systems Integration</p>
-  <div class="chip">
-    <span>ME 480</span> • <span>Completed Project</span>
-  </div>
+  <p class="subtitle">Riderless Balance, Remote Actuation, and Systems Integration</p>
+  <div class="chip"><span>ME 480</span> • <span>Completed Project</span></div>
 </header>
 
 <main class="wrap">
 
-<a class="back" href="index.html">← Back to Portfolio</a>
+  <section class="card">
+    <span class="kicker">Mission</span>
+    <h2>Problem &amp; <span class="grad">Mission</span></h2>
+    <p>
+      Shared electric scooters are widely deployed in urban environments, yet fleet logistics
+      remain highly manual. Scooters must be physically located, collected, charged, and repositioned,
+      resulting in high operational costs, sidewalk clutter, and inconsistent availability.
+    </p>
+    <p>
+      The mission of this project was to establish a functional foundation for future autonomous
+      fleet repositioning by demonstrating that a standard two-wheel scooter can maintain upright
+      stability and respond to remote commands without a rider onboard.
+    </p>
+  </section>
 
-<section class="card">
-  <h2>Problem & Mission</h2>
-  <p>
-    Shared electric scooters are widely deployed in urban environments, yet fleet logistics
-    remain highly manual. Scooters must be physically located, collected, charged, and repositioned,
-    resulting in high operational costs, sidewalk clutter, and inconsistent availability.
-  </p>
-  <p>
-    The mission of this project was to establish a functional foundation for future autonomous
-    fleet repositioning by demonstrating that a standard two-wheel scooter can maintain upright
-    stability and respond to remote commands without a rider onboard.
-  </p>
-</section>
+  <section class="card">
+    <span class="kicker">Solution</span>
+    <h2>System-Level <span class="grad">Solution</span></h2>
+    <p>
+      The prototype modifies a consumer electric scooter with modular add-on components that integrate
+      sensing, control, and mechanical actuation. The system executes steering, throttle, braking,
+      and kickstand deployment while maintaining balance through IMU-based feedback control.
+    </p>
+    <ul class="tight">
+      <li>Real-time balance sensing using an IMU</li>
+      <li>Servo-driven mechanical actuation of rider controls</li>
+      <li>Wireless command input via handheld RC transmitter</li>
+      <li>Modular mounting architecture enabling rapid iteration</li>
+    </ul>
+  </section>
 
-<section class="card">
-  <h2>System-Level Solution</h2>
-  <p>
-    The prototype modifies a consumer electric scooter with modular add-on components that integrate
-    sensing, control, and mechanical actuation. The system executes steering, throttle, braking,
-    and kickstand deployment while maintaining balance through IMU-based feedback control.
-  </p>
-  <ul>
-    <li>Real-time balance sensing using an IMU</li>
-    <li>Servo-driven mechanical actuation of rider controls</li>
-    <li>Wireless command input via handheld RC transmitter</li>
-    <li>Modular mounting architecture enabling rapid iteration</li>
-  </ul>
-</section>
+  <section class="card">
+    <span class="kicker">Subsystems</span>
+    <h2>How the <span class="grad">System Works</span></h2>
 
-<section class="card">
-  <h2>How the System Works</h2>
+    <div class="subsystem">
+      <h3>Steering Control</h3>
+      <p>
+        A dedicated steering servo mechanically actuates the front steering column, enabling directional
+        control under remote input while maintaining balance.
+      </p>
+      <div class="media media-50">
+        <img src="images/steering.gif" alt="Steering servo actuation">
+      </div>
+    </div>
 
-  <h3>Steering Control</h3>
-  <p>
-    A dedicated steering servo mechanically actuates the front steering column, enabling directional
-    control under remote input while maintaining balance.
-  </p>
-  <img src="images/steering.gif" alt="Steering servo actuation">
+    <div class="subsystem">
+      <h3>Throttle &amp; Braking</h3>
+      <p>
+        Independent servos interface directly with the scooter's throttle and braking mechanisms,
+        allowing smooth acceleration and controlled deceleration through remote commands.
+      </p>
+      <div class="media media-50">
+        <img src="images/throttle_brake.gif" alt="Throttle and braking actuation">
+      </div>
+    </div>
 
-  <h3>Throttle & Braking</h3>
-  <p>
-    Independent servos interface directly with the scooter’s throttle and braking mechanisms,
-    allowing smooth acceleration and controlled deceleration through remote commands.
-  </p>
-  <img src="images/throttle_brake.gif" alt="Throttle and braking actuation">
+    <div class="subsystem">
+      <h3>Kickstand Deployment</h3>
+      <p>
+        A servo-driven kickstand mechanism allows the scooter to transition between parked and operational
+        states without manual intervention.
+      </p>
+      <div class="media media-50">
+        <img src="images/kickstand.gif" alt="Kickstand deployment mechanism">
+      </div>
+    </div>
+  </section>
 
-  <h3>Kickstand Deployment</h3>
-  <p>
-    A servo-driven kickstand mechanism allows the scooter to transition between parked and operational
-    states without manual intervention.
-  </p>
-  <img src="images/kickstand.gif" alt="Kickstand deployment mechanism">
-</section>
+  <section class="card">
+    <span class="kicker">Demo</span>
+    <h2>Live <span class="grad">Demonstration</span></h2>
+    <p>
+      The following demonstration shows the fully integrated system maintaining upright balance while
+      responding to remote steering, throttle, braking, and kickstand commands.
+    </p>
+    <div class="media media-70">
+      <video controls>
+        <source src="images/demo.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
 
-<section class="card">
-  <h2>Live Demonstration</h2>
-  <p>
-    The following demonstration shows the fully integrated system maintaining upright balance while
-    responding to remote steering, throttle, braking, and kickstand commands.
-  </p>
-  <video controls class="media-70">
-    <source src="images/demo.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-</section>
+  <section class="card">
+    <span class="kicker">Electronics</span>
+    <h2>Control &amp; Electronics <span class="grad">Architecture</span></h2>
+    <p>
+      The control system integrates inertial sensing, wireless command input, and servo actuation
+      through a centralized microcontroller. Balance feedback from the IMU informs stabilization logic,
+      while RC signals provide real-time operator input.
+    </p>
+    <ul class="tight">
+      <li>MPU-6050 IMU for orientation and angular velocity sensing</li>
+      <li>Arduino-based controller for signal processing and actuation</li>
+      <li>2.4 GHz RC receiver for wireless command input</li>
+      <li>Dedicated power regulation to ensure stable servo operation</li>
+    </ul>
+    <div class="media media-50">
+      <img src="images/circuit.png" alt="Scooter control and electronics diagram">
+      <div class="caption">Control and electronics architecture diagram.</div>
+    </div>
+  </section>
 
-<section class="card">
-  <h2>Control & Electronics Architecture</h2>
-  <p>
-    The control system integrates inertial sensing, wireless command input, and servo actuation
-    through a centralized microcontroller. Balance feedback from the IMU informs stabilization logic,
-    while RC signals provide real-time operator input.
-  </p>
-  <ul>
-    <li>MPU-6050 IMU for orientation and angular velocity sensing</li>
-    <li>Arduino-based controller for signal processing and actuation</li>
-    <li>2.4 GHz RC receiver for wireless command input</li>
-    <li>Dedicated power regulation to ensure stable servo operation</li>
-  </ul>
-  <img
-  src="images/circuit.png"
-  alt="Scooter control and electronics diagram"
-  class="media-50"
->
-</section>
+  <section class="card">
+    <span class="kicker">Challenges</span>
+    <h2>Engineering <span class="grad">Challenges</span></h2>
+    <ul class="tight">
+      <li>PID tuning for balance stability in the absence of rider-induced damping</li>
+      <li>Mechanical packaging within a constrained scooter frame</li>
+      <li>IMU noise sensitivity and signal filtering</li>
+      <li>Servo backlash, gear meshing, and alignment tolerances</li>
+    </ul>
+  </section>
 
-<section class="card">
-  <h2>Engineering Challenges</h2>
-  <ul>
-    <li>PID tuning for balance stability in the absence of rider-induced damping</li>
-    <li>Mechanical packaging within a constrained scooter frame</li>
-    <li>IMU noise sensitivity and signal filtering</li>
-    <li>Servo backlash, gear meshing, and alignment tolerances</li>
-  </ul>
-</section>
-
-<section class="card">
-  <h2>Results & Key Takeaways</h2>
-  <p>
-    The completed prototype successfully demonstrated riderless self-balancing behavior and
-    coordinated remote actuation of steering, throttle, braking, and kickstand mechanisms.
-    While not fully autonomous, the system validates core concepts required for future
-    autonomous scooter repositioning.
-  </p>
-  <ul>
-    <li>Demonstrated stable balance under remote operation</li>
-    <li>Validated mechanical actuation of rider controls</li>
-    <li>Established a scalable platform for further autonomy development</li>
-  </ul>
-</section>
+  <section class="card">
+    <span class="kicker">Outcome</span>
+    <h2>Results &amp; Key <span class="grad">Takeaways</span></h2>
+    <p>
+      The completed prototype successfully demonstrated riderless self-balancing behavior and
+      coordinated remote actuation of steering, throttle, braking, and kickstand mechanisms.
+      While not fully autonomous, the system validates core concepts required for future
+      autonomous scooter repositioning.
+    </p>
+    <ul class="tight">
+      <li>Demonstrated stable balance under remote operation</li>
+      <li>Validated mechanical actuation of rider controls</li>
+      <li>Established a scalable platform for further autonomy development</li>
+    </ul>
+    <div class="btn-row">
+      <a class="btn-brand" href="index.html">← Back to Portfolio</a>
+    </div>
+  </section>
 
 </main>
 
-<footer>
-  © 2025 Zhengzhao (Ken) Li — ME 480 Project
-</footer>
+<footer>© 2026 Zhengzhao (Ken) Li — ME 480 Project</footer>
 
 <script>
-  window.addEventListener('load',()=>document.body.classList.add('page-in'));
-  const io=new IntersectionObserver((e)=>e.forEach(x=>{
-    if(x.isIntersecting){x.target.classList.add('show');io.unobserve(x.target)}
-  }),{threshold:.15});
-  document.querySelectorAll('section.card').forEach(s=>io.observe(s));
+  window.addEventListener('load', () => document.body.classList.add('page-in'));
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('section.card').forEach(s => io.observe(s));
+
+  // Smooth page fade-out on internal navigation
+  document.querySelectorAll('a[href$=".html"]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const href = a.getAttribute('href');
+      document.body.classList.add('fade-leave');
+      setTimeout(() => { location.href = href; }, 280);
+    });
+  });
 </script>
+
 </body>
 </html>
-```
