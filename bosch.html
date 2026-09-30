@@ -4,102 +4,242 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bosch Internship — Zhengzhao (Ken) Li</title>
+<meta name="description" content="Bosch XC-CT EHW Technician Internship — Zhengzhao (Ken) Li portfolio.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
 <style>
-  :root{
-    --brand:#4b0082; --brand-2:#6a0dad; --glass:rgba(255,255,255,.7);
-    --shadow:0 10px 30px rgba(0,0,0,.15); --radius:18px;
-  }
-  html{scroll-behavior:smooth}
-  body{
-    margin:0; font-family: ui-sans-serif, -apple-system, "Segoe UI", Arial, sans-serif; line-height:1.65; color:#1b1b1f;
-    background: radial-gradient(1200px 600px at 10% -10%, #efe7ff 0, #faf6ff 30%, #f7f7fb 60%, #f9f9fb 100%) fixed;
-    opacity:0; transition:opacity .45s ease;
-  }
-  body.page-in{opacity:1}
-  header{
-    text-align:center; color:#fff; padding:56px 20px 28px;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2));
-    position:relative; overflow:hidden;
-  }
-  header img{width:200px; border-radius:12px; box-shadow:var(--shadow); margin-top:14px}
-  .wrap{max-width:900px; margin:auto; padding:28px 18px}
-  section.card{
-    background:var(--glass); border:1px solid rgba(0,0,0,.06); border-radius:var(--radius); box-shadow:var(--shadow);
-    padding:26px clamp(18px,3vw,28px); margin:26px 0; backdrop-filter: blur(14px);
-    opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;
-  }
-  section.card.show{opacity:1; transform:translateY(0)}
-  h2{color:var(--brand); margin:.2rem 0 1rem}
-  img.media{display:block; margin:18px auto; max-width:70%; border-radius:14px; box-shadow:var(--shadow); transition:transform .3s}
-  img.media:hover{transform: translateY(-3px) scale(1.02)}
-  .caption{font-style:italic; color:#555; text-align:center; margin:-6px 0 12px}
-  a{color:var(--brand); text-decoration:none}
-  .btn{
-    display:inline-flex; gap:8px; align-items:center; padding:10px 14px; border-radius:12px;
-    background:linear-gradient(135deg,var(--brand),var(--brand-2)); color:#fff; font-weight:700; box-shadow:var(--shadow)
-  }
-  footer{color:#fff; background:linear-gradient(135deg,var(--brand),var(--brand-2)); text-align:center; padding:22px; margin-top:18px}
-  .fade-leave{opacity:0; transition:opacity .35s ease}
-  @media (max-width:600px){ img.media{max-width:90%} }
+/* ============ Base ============ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root{
+  --ink: #191922;
+  --muted: #5f5f6e;
+  --brand: #4b0082;
+  --brand-2: #6a0dad;
+  --brand-soft: rgba(106,13,173,.08);
+  --card: rgba(255,255,255,.82);
+  --shadow: 0 14px 40px rgba(43,10,84,.12);
+  --shadow-sm: 0 6px 18px rgba(43,10,84,.10);
+  --radius: 20px;
+  --font-body: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-head: "Sora", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+html{ scroll-behavior: smooth; }
+body{
+  font-family: var(--font-body);
+  color: var(--ink);
+  line-height: 1.7;
+  background:
+    radial-gradient(700px 500px at 12% 6%, rgba(106,13,173,.16), transparent 60%),
+    radial-gradient(560px 460px at 88% 14%, rgba(75,0,130,.12), transparent 65%),
+    radial-gradient(760px 640px at 50% 96%, rgba(180,120,255,.10), transparent 70%),
+    linear-gradient(180deg, #faf5ff 0%, #f6f6fb 55%, #f8f8fb 100%);
+  background-attachment: fixed;
+  opacity: 0;
+  transition: opacity .5s ease;
+  -webkit-font-smoothing: antialiased;
+}
+body.page-in{ opacity: 1; }
+body.fade-leave{ opacity: 0; transition: opacity .3s ease; }
+a{ color: var(--brand); text-decoration: none; }
+img{ max-width: 100%; }
+
+/* ============ Nav ============ */
+.nav{
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: rgba(255,255,255,.72);
+  border-bottom: 1px solid rgba(75,0,130,.10);
+}
+.nav-inner{
+  max-width: 1020px; margin: auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px;
+}
+.nav-logo{ font-family: var(--font-head); font-weight: 800; font-size: 1.05rem; color: var(--brand); }
+.back-link{
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 600; font-size: .92rem; color: var(--ink);
+  padding: 8px 12px; border-radius: 10px;
+  transition: background .2s ease, color .2s ease;
+}
+.back-link:hover{ background: var(--brand-soft); color: var(--brand); }
+
+/* ============ Hero ============ */
+.hero{
+  position: relative; overflow: hidden;
+  color: #fff; text-align: center;
+  padding: clamp(64px, 10vw, 110px) 20px 56px;
+  background:
+    radial-gradient(600px 380px at 20% 20%, rgba(180,124,255,.35), transparent 60%),
+    radial-gradient(700px 420px at 82% 78%, rgba(120,40,220,.30), transparent 62%),
+    linear-gradient(135deg, #36015e 0%, var(--brand) 45%, var(--brand-2) 100%);
+}
+.hero::before{
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 90% at 50% 40%, #000 30%, transparent 75%);
+}
+.hero > *{ position: relative; }
+.hero h1{ font-family: var(--font-head); font-weight: 800; font-size: clamp(26px, 4vw, 38px); letter-spacing: -.01em; }
+.hero .meta{ margin-top: 12px; font-size: .95rem; opacity: .9; font-weight: 500; }
+.hero .chip{
+  display: inline-flex; gap: 8px; padding: 7px 15px; border-radius: 999px;
+  background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28);
+  font-size: .85rem; font-weight: 600; margin-top: 14px;
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+}
+.hero img{
+  width: 220px; border-radius: 16px; margin-top: 22px;
+  border: 3px solid rgba(255,255,255,.5);
+  box-shadow: 0 16px 36px rgba(0,0,0,.3);
+}
+
+/* ============ Layout / Cards ============ */
+.wrap{ max-width: 900px; margin: auto; padding: 8px 20px 40px; }
+section.card{
+  scroll-margin-top: 84px;
+  background: var(--card);
+  border: 1px solid rgba(75,0,130,.08);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: clamp(24px, 4vw, 34px);
+  margin: 32px 0;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  opacity: 0; transform: translateY(30px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+section.card.show{ opacity: 1; transform: translateY(0); }
+.kicker{
+  display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--brand-2); background: var(--brand-soft);
+  padding: 5px 12px; border-radius: 999px; margin-bottom: 12px;
+}
+h2{ font-family: var(--font-head); font-size: clamp(1.3rem, 2.6vw, 1.6rem); color: var(--ink); margin-bottom: 1rem; letter-spacing: -.01em; }
+h2 .grad{ background: linear-gradient(120deg, var(--brand), var(--brand-2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+p{ margin: .55rem 0; }
+ul.tight{ margin: .5rem 0 .5rem 1.2rem; }
+ul.tight li{ margin: .4rem 0; }
+img.media{
+  display: block; margin: 20px auto; max-width: 68%;
+  border-radius: 16px; box-shadow: var(--shadow);
+  border: 1px solid rgba(75,0,130,.08);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+img.media:hover{ transform: translateY(-3px) scale(1.02); }
+.caption{ font-style: italic; color: var(--muted); text-align: center; margin: -8px 0 14px; font-size: .9rem; }
+
+/* ============ Buttons / Footer ============ */
+.btn-row{ margin-top: 18px; }
+.btn-brand{
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: 14px; font-weight: 700; color: #fff;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  box-shadow: 0 10px 24px rgba(75,0,130,.35);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.btn-brand:hover{ transform: translateY(-2px); box-shadow: 0 14px 30px rgba(75,0,130,.42); color: #fff; }
+footer{
+  background: linear-gradient(135deg, #36015e, var(--brand) 60%, var(--brand-2));
+  color: rgba(255,255,255,.85); text-align: center; padding: 26px 20px; font-size: .9rem;
+}
+
+@media (max-width: 600px){
+  img.media{ max-width: 92%; }
+  .hero img{ width: 170px; }
+}
+@media (prefers-reduced-motion: reduce){
+  *{ animation: none !important; transition: none !important; }
+  section.card{ opacity: 1; transform: none; }
+}
 </style>
 </head>
+
 <body>
-<header>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Ken Li</a>
+    <a class="back-link" href="index.html">← Back to Portfolio</a>
+  </div>
+</nav>
+
+<header class="hero">
   <h1>Bosch XC-CT EHW Technician Internship</h1>
-  <p>July – August 2023 · Shanghai, China</p>
+  <p class="meta">July – August 2023 · Shanghai, China</p>
+  <div><span class="chip">Internship</span></div>
   <img src="images/BOSCH-2.jpg" alt="Bosch internship certificate and ID badge">
 </header>
 
 <main class="wrap">
+
   <section class="card">
-    <h2>Overview</h2>
+    <span class="kicker">Overview</span>
+    <h2>What I <span class="grad">did</span></h2>
     <p>
       During my internship at Bosch, I supported the XC-CT EHW team by performing diagnostic and technical
       tasks that emphasized precision, documentation, and collaboration between engineering departments.
       This position exposed me to the process of verifying automotive electronic modules and working within
-      Bosch’s rigorous quality system.
+      Bosch's rigorous quality system.
     </p>
   </section>
 
   <section class="card">
-    <h2>Key Responsibilities</h2>
-    <ul>
+    <span class="kicker">Responsibilities</span>
+    <h2>Key <span class="grad">contributions</span></h2>
+    <ul class="tight">
       <li>Reworked and debugged printed circuit boards (PCBs) through soldering, wiring, and functional testing.</li>
       <li>Used an oscilloscope to analyze voltage signals, confirm component behavior, and assist engineers in fault tracing.</li>
       <li>Translated and standardized technical documentation for bilingual teams across departments.</li>
       <li>Supported diagnostics and final verification of electrical subassemblies for automotive control units.</li>
     </ul>
-
     <img class="media" src="images/BOSCH-1.jpg" alt="Example PCB and soldering setup at Bosch">
     <p class="caption">Example of a PCB board and soldering work setup used during diagnostic procedures.</p>
   </section>
 
   <section class="card">
-    <h2>Skills Gained</h2>
-    <ul>
+    <span class="kicker">Takeaways</span>
+    <h2>Skills <span class="grad">gained</span></h2>
+    <ul class="tight">
       <li>Hands-on experience using oscilloscopes, multimeters, and soldering tools for precision diagnostics.</li>
       <li>Enhanced cross-disciplinary communication between mechanical and electrical engineers.</li>
       <li>Learned structured problem-solving, documentation discipline, and attention to quality assurance in production environments.</li>
     </ul>
-
-    <a class="btn" href="index.html">← Back to Portfolio</a>
+    <div class="btn-row">
+      <a class="btn-brand" href="index.html">← Back to Portfolio</a>
+    </div>
   </section>
+
 </main>
 
-<footer>© 2025 Zhengzhao (Ken) Li</footer>
+<footer>© 2026 Zhengzhao (Ken) Li — All Rights Reserved</footer>
 
 <script>
-  window.addEventListener('load', ()=> document.body.classList.add('page-in'));
-  const io = new IntersectionObserver((es)=> es.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('show'); io.unobserve(e.target)} }), {threshold:.15});
-  document.querySelectorAll('section.card').forEach(s=> io.observe(s));
+  window.addEventListener('load', () => document.body.classList.add('page-in'));
 
-  // Page fade-out back to index
-  document.querySelectorAll('a[href$=".html"]').forEach(a=>{
-    a.addEventListener('click', (ev)=>{
-      ev.preventDefault(); const href=a.getAttribute('href');
-      document.body.classList.add('fade-leave'); setTimeout(()=> location.href=href, 250);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('section.card').forEach(s => io.observe(s));
+
+  // Smooth page fade-out on internal navigation
+  document.querySelectorAll('a[href$=".html"]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const href = a.getAttribute('href');
+      document.body.classList.add('fade-leave');
+      setTimeout(() => { location.href = href; }, 280);
     });
   });
 </script>
+
 </body>
 </html>
